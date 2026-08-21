@@ -47,16 +47,13 @@ Aplique as migrations num projeto Supabase novo (SQL Editor ou `supabase db push
 
 Configure um heartbeat semanal no Make.com fazendo um `GET` simples em `${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/` com o header `apikey` (a chave publicável) — qualquer requisição autenticada reinicia o timer de inatividade.
 
-### Vincular um usuário autenticado a um colaborador
+### Convidar um usuário para acessar o sistema
 
-Não há tela de "criar usuário" no app (por design — apenas o administrador cria contas). Fluxo:
+Fluxo pelo próprio app (gerente/administrativo): abra o colaborador em **Colaboradores → (nome) → Acesso ao sistema** e clique em "Convidar para acessar o sistema" com o e-mail da pessoa. Isso cria a conta no Supabase Auth, envia um e-mail com link para a pessoa definir a senha, e já vincula automaticamente ao registro do colaborador (`user_id`) — sem precisar mexer no SQL Editor.
 
-1. No painel do Supabase, em **Authentication → Users**, clique em **Invite user** (ou **Add user**) com o e-mail da pessoa.
-2. Copie o **UID** gerado.
-3. Em **Colaboradores** (dentro do app, como gerente/administrativo), crie ou edite o colaborador e, via SQL Editor do Supabase, rode:
-   ```sql
-   update colaboradores set user_id = '<uid-copiado>' where id = '<id-do-colaborador>';
-   ```
+Essa tela usa a **service role key** (nunca exposta ao navegador) — veja a variável `SUPABASE_SERVICE_ROLE_KEY` na seção de deploy.
+
+Recuperação/troca de senha: qualquer usuário pode usar "Esqueci minha senha" na tela de login, ou trocar a senha logado em **Trocar senha** (link no menu, ao lado do nome).
 
 ## 3. Deploy — Cloudflare (GitHub → deploy automático)
 
@@ -80,8 +77,9 @@ npm run cf:deploy    # build + wrangler deploy
    - **Build command:** `npm run cf:build`
    - **Deploy command:** `npx wrangler deploy`
    - (o Cloudflare detecta o `wrangler.jsonc` automaticamente)
-4. Em **Environment variables**, adicione `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` (mesmos valores do `.env.local`).
-5. Salve — todo push na branch principal do GitHub dispara um novo deploy automaticamente.
+4. Em **Build variables and secrets**, adicione `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` (mesmos valores do `.env.local`) — essas duas são lidas em tempo de *build* (viram parte do JS enviado ao navegador), então precisam estar especificamente nessa seção, não em "Variables & Secrets" runtime.
+5. Depois de criado o Worker, vá em **Settings → Variables & Secrets** (essa sim é runtime) e adicione `SUPABASE_SERVICE_ROLE_KEY` como **Secret** (Supabase → Project Settings → API → service_role secret). Sem isso, tudo funciona exceto o convite de usuários pelo painel (colaboradores/[id] → Acesso ao sistema).
+6. Salve — todo push na branch principal do GitHub dispara um novo deploy automaticamente.
 
 ### Alternativa via CLI (primeira vez / deploy manual)
 

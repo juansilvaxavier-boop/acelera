@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
-export async function adicionarPagamento(colaboradorId: string, formData: FormData) {
+export async function adicionarPagamento(colaboradorId: string, _prevState: unknown, formData: FormData) {
   const supabase = await createClient();
   const { error } = await supabase.from("pagamentos_colaborador").insert({
     colaborador_id: colaboradorId,
@@ -13,8 +13,9 @@ export async function adicionarPagamento(colaboradorId: string, formData: FormDa
     referencia_externa: String(formData.get("referencia_externa") ?? "") || null,
   });
 
-  if (error) throw new Error(error.message);
+  if (error) return { error: error.message };
   revalidatePath(`/colaboradores/${colaboradorId}`);
+  return { error: "", success: true };
 }
 
 export async function removerPagamento(colaboradorId: string, pagamentoId: string) {

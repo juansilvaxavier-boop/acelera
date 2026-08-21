@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
-export async function adicionarDocumento(colaboradorId: string, formData: FormData) {
+export async function adicionarDocumento(colaboradorId: string, _prevState: unknown, formData: FormData) {
   const supabase = await createClient();
   const { error } = await supabase.from("documentos_colaborador").insert({
     colaborador_id: colaboradorId,
@@ -13,8 +13,9 @@ export async function adicionarDocumento(colaboradorId: string, formData: FormDa
     data_vencimento: String(formData.get("data_vencimento") ?? "") || null,
   });
 
-  if (error) throw new Error(error.message);
+  if (error) return { error: error.message };
   revalidatePath(`/colaboradores/${colaboradorId}`);
+  return { error: "", success: true };
 }
 
 export async function removerDocumento(colaboradorId: string, documentoId: string) {

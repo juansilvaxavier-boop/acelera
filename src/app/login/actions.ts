@@ -1,7 +1,15 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+
+async function origin() {
+  const h = await headers();
+  const proto = h.get("x-forwarded-proto") ?? "https";
+  const host = h.get("host");
+  return `${proto}://${host}`;
+}
 
 export async function signIn(_prevState: unknown, formData: FormData) {
   const email = String(formData.get("email") ?? "");
@@ -18,6 +26,18 @@ export async function signIn(_prevState: unknown, formData: FormData) {
   }
 
   redirect("/");
+}
+
+export async function solicitarRedefinicaoSenha(_prevState: unknown, formData: FormData) {
+  const email = String(formData.get("email") ?? "");
+  const supabase = await createClient();
+
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${await origin()}/auth/callback?next=/conta/senha`,
+  });
+
+  // Sempre retorna sucesso, mesmo se o e-mail não existir, para não revelar quais e-mails têm conta.
+  return { error: "", success: true };
 }
 
 export async function signOut() {

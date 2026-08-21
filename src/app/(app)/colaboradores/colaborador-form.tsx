@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import type { Tables } from "@/lib/supabase/types";
+import { ActionToast } from "@/components/action-toast";
 
 const CARGOS = ["vendedor", "supervisor", "gerente", "terceiro", "motorista", "administrativo"];
 const VINCULOS = ["CLT", "PJ", "terceirizado", "comissionado"];
@@ -24,6 +25,7 @@ export function ColaboradorForm({
 
   return (
     <form action={formAction} className="grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
+      <ActionToast error={state.error} success={state.success} successMessage="Colaborador salvo." />
       <div className="sm:col-span-2">
         <label className="block text-sm font-medium text-slate-700">Nome</label>
         <input name="nome" required defaultValue={colaborador?.nome} className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" />
@@ -71,9 +73,6 @@ export function ColaboradorForm({
         <label className="block text-sm font-medium text-slate-700">Telefone</label>
         <input name="telefone" defaultValue={colaborador?.telefone ?? ""} className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" />
       </div>
-
-      {state?.error ? <p className="sm:col-span-2 text-sm text-red-600">{state.error}</p> : null}
-      {state?.success ? <p className="sm:col-span-2 text-sm text-emerald-600">Salvo com sucesso.</p> : null}
 
       <div className="sm:col-span-2">
         <button type="submit" disabled={pending} className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-60">

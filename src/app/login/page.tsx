@@ -1,9 +1,24 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "./actions";
 
 const initialState = { error: "" };
+
+function LinkInvalidoAviso() {
+  const searchParams = useSearchParams();
+  const linkInvalido = searchParams.get("erro") === "link_invalido";
+
+  if (!linkInvalido) return null;
+
+  return (
+    <p className="mt-4 text-sm text-red-600">
+      O link usado expirou ou é inválido. Solicite um novo link de redefinição de senha.
+    </p>
+  );
+}
 
 export default function LoginPage() {
   const [state, formAction, pending] = useActionState(signIn, initialState);
@@ -13,6 +28,10 @@ export default function LoginPage() {
       <div className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
         <h1 className="text-xl font-semibold text-slate-900">RH + CRM</h1>
         <p className="mt-1 text-sm text-slate-500">Distribuidora de Fertilizantes</p>
+
+        <Suspense fallback={null}>
+          <LinkInvalidoAviso />
+        </Suspense>
 
         <form action={formAction} className="mt-6 space-y-4">
           <div>
@@ -53,6 +72,12 @@ export default function LoginPage() {
           >
             {pending ? "Entrando..." : "Entrar"}
           </button>
+
+          <p className="text-center text-sm">
+            <Link href="/esqueci-senha" className="text-emerald-700 hover:underline">
+              Esqueci minha senha
+            </Link>
+          </p>
         </form>
       </div>
     </div>

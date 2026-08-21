@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import type { Tables } from "@/lib/supabase/types";
+import { ActionToast } from "@/components/action-toast";
 
 type Action = (prevState: unknown, formData: FormData) => Promise<{ error?: string; success?: boolean } | void>;
 
@@ -22,6 +23,7 @@ export function ClienteForm({
 
   return (
     <form action={formAction} className="grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
+      <ActionToast error={state?.error} success={state?.success} successMessage="Cliente salvo." />
       <div className="sm:col-span-2">
         <label className="block text-sm font-medium text-slate-700">Nome / Razão social</label>
         <input name="nome" required defaultValue={cliente?.nome} className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" />
@@ -60,9 +62,6 @@ export function ClienteForm({
           {vendedores.map((v) => <option key={v.id} value={v.id}>{v.nome}</option>)}
         </select>
       </div>
-
-      {state?.error ? <p className="sm:col-span-2 text-sm text-red-600">{state.error}</p> : null}
-      {state?.success ? <p className="sm:col-span-2 text-sm text-emerald-600">Salvo com sucesso.</p> : null}
 
       <div className="sm:col-span-2">
         <button type="submit" disabled={pending} className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-60">

@@ -3,12 +3,13 @@ import { createClient } from "@/lib/supabase/server";
 import { getColaboradorAtual, ehAdmin } from "@/lib/auth";
 import { ColaboradorForm } from "../colaborador-form";
 import { atualizarColaborador } from "../actions";
-import { adicionarDocumento, removerDocumento } from "./documentos-actions";
-import { adicionarPagamento, removerPagamento } from "./pagamentos-actions";
+import { removerDocumento } from "./documentos-actions";
+import { removerPagamento } from "./pagamentos-actions";
+import { DocumentoForm } from "./documento-form";
+import { PagamentoForm } from "./pagamento-form";
+import { ConviteUsuario } from "./convite-usuario";
+import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { hojeISO, daquiADiasISO } from "@/lib/datas";
-
-const TIPOS_DOC = ["contrato", "rg", "cpf", "cnh", "exame_admissional", "exame_periodico", "outro"];
-const TIPOS_PAGAMENTO = ["salario", "comissao", "adiantamento", "plr", "outro"];
 
 function formatBRL(valor: number) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -52,8 +53,6 @@ export default async function ColaboradorDetalhePage({
   ]);
 
   const updateAction = atualizarColaborador.bind(null, id);
-  const addDocumento = adicionarDocumento.bind(null, id);
-  const addPagamento = adicionarPagamento.bind(null, id);
 
   const hoje = hojeISO();
   const em30dias = daquiADiasISO(30);
@@ -90,10 +89,21 @@ export default async function ColaboradorDetalhePage({
         )}
       </section>
 
+      {admin && (
+        <section>
+          <h2 className="mb-3 text-sm font-semibold text-slate-900">Acesso ao sistema</h2>
+          <ConviteUsuario
+            colaboradorId={id}
+            emailAtual={colaborador.email}
+            jaVinculado={!!colaborador.user_id}
+          />
+        </section>
+      )}
+
       <section>
         <h2 className="mb-3 text-sm font-semibold text-slate-900">Documentos</h2>
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+          <table className="w-full min-w-[640px] text-sm">
             <thead className="bg-slate-50 text-left text-slate-500">
               <tr>
                 <th className="px-4 py-2 font-medium">Tipo</th>
@@ -126,7 +136,12 @@ export default async function ColaboradorDetalhePage({
                     {admin && (
                       <td className="px-4 py-2 text-right">
                         <form action={removerDocumento.bind(null, id, d.id)}>
-                          <button className="text-xs text-red-600 hover:underline">remover</button>
+                          <ConfirmSubmitButton
+                            confirmMessage="Remover este documento?"
+                            className="text-xs text-red-600 hover:underline"
+                          >
+                            remover
+                          </ConfirmSubmitButton>
                         </form>
                       </td>
                     )}
@@ -144,37 +159,13 @@ export default async function ColaboradorDetalhePage({
           </table>
         </div>
 
-        {admin && (
-          <form action={addDocumento} className="mt-3 flex flex-wrap items-end gap-3 rounded-lg border border-slate-200 bg-white p-4">
-            <div>
-              <label className="block text-xs font-medium text-slate-600">Tipo</label>
-              <select name="tipo" required className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm">
-                {TIPOS_DOC.map((t) => <option key={t} value={t}>{t.replace(/_/g, " ")}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-600">Link do arquivo (Drive)</label>
-              <input name="arquivo_url" className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-600">Emissão</label>
-              <input type="date" name="data_emissao" className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-600">Vencimento</label>
-              <input type="date" name="data_vencimento" className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-            </div>
-            <button type="submit" className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700">
-              Adicionar
-            </button>
-          </form>
-        )}
+        {admin && <DocumentoForm colaboradorId={id} />}
       </section>
 
       <section>
         <h2 className="mb-3 text-sm font-semibold text-slate-900">Pagamentos</h2>
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+          <table className="w-full min-w-[640px] text-sm">
             <thead className="bg-slate-50 text-left text-slate-500">
               <tr>
                 <th className="px-4 py-2 font-medium">Tipo</th>
@@ -194,7 +185,12 @@ export default async function ColaboradorDetalhePage({
                   {admin && (
                     <td className="px-4 py-2 text-right">
                       <form action={removerPagamento.bind(null, id, p.id)}>
-                        <button className="text-xs text-red-600 hover:underline">remover</button>
+                        <ConfirmSubmitButton
+                          confirmMessage="Remover este pagamento?"
+                          className="text-xs text-red-600 hover:underline"
+                        >
+                          remover
+                        </ConfirmSubmitButton>
                       </form>
                     </td>
                   )}
@@ -211,31 +207,7 @@ export default async function ColaboradorDetalhePage({
           </table>
         </div>
 
-        {admin && (
-          <form action={addPagamento} className="mt-3 flex flex-wrap items-end gap-3 rounded-lg border border-slate-200 bg-white p-4">
-            <div>
-              <label className="block text-xs font-medium text-slate-600">Tipo</label>
-              <select name="tipo" required className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm">
-                {TIPOS_PAGAMENTO.map((t) => <option key={t} value={t}>{t}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-600">Valor (R$)</label>
-              <input type="number" step="0.01" name="valor" required className="mt-1 w-32 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-600">Data de referência</label>
-              <input type="date" name="data_referencia" required className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-600">Ref. externa (ERP)</label>
-              <input name="referencia_externa" placeholder="opcional" className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-            </div>
-            <button type="submit" className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700">
-              Lançar
-            </button>
-          </form>
-        )}
+        {admin && <PagamentoForm colaboradorId={id} />}
       </section>
     </div>
   );

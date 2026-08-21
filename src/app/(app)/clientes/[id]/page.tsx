@@ -1,15 +1,12 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getColaboradorAtual } from "@/lib/auth";
+import { getColaboradorAtual, ehAdmin } from "@/lib/auth";
 import { ClienteForm } from "../cliente-form";
 import { atualizarCliente } from "../actions";
-import { adicionarVisita } from "./visita-actions";
-import { adicionarOportunidade } from "./oportunidade-actions";
-import { ESTAGIOS, ESTAGIO_LABEL, TIPOS_VISITA } from "@/lib/crm";
-
-function formatBRL(valor: number) {
-  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-}
+import { VisitaForm } from "./visita-form";
+import { VisitaRow } from "./visita-row";
+import { OportunidadeForm } from "./oportunidade-form";
+import { OportunidadeRow } from "./oportunidade-row";
 
 export default async function ClienteDetalhePage({
   params,
@@ -19,6 +16,7 @@ export default async function ClienteDetalhePage({
   const { id } = await params;
   const supabase = await createClient();
   const colaborador = await getColaboradorAtual();
+  const admin = ehAdmin(colaborador);
 
   const { data: cliente } = await supabase.from("clientes").select("*").eq("id", id).maybeSingle();
   if (!cliente) notFound();
@@ -29,8 +27,7 @@ export default async function ClienteDetalhePage({
     supabase.from("oportunidades").select("*").eq("cliente_id", id).order("criado_em", { ascending: false }),
   ]);
 
-  const addVisita = adicionarVisita.bind(null, id);
-  const addOportunidade = adicionarOportunidade.bind(null, id);
+  const podeEditar = (vendedorId: string) => admin || vendedorId === colaborador?.id;
 
   return (
     <div className="space-y-10">
@@ -51,28 +48,30 @@ export default async function ClienteDetalhePage({
 
       <section>
         <h2 className="mb-3 text-sm font-semibold text-slate-900">Oportunidades</h2>
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+          <table className="w-full min-w-[640px] text-sm">
             <thead className="bg-slate-50 text-left text-slate-500">
               <tr>
                 <th className="px-4 py-2 font-medium">Estágio</th>
                 <th className="px-4 py-2 font-medium">Valor</th>
                 <th className="px-4 py-2 font-medium">Safra</th>
                 <th className="px-4 py-2 font-medium">Previsão</th>
+                <th className="px-4 py-2 font-medium" />
               </tr>
             </thead>
             <tbody>
               {(oportunidades ?? []).map((o) => (
-                <tr key={o.id} className="border-t border-slate-100">
-                  <td className="px-4 py-2">{ESTAGIO_LABEL[o.estagio] ?? o.estagio}</td>
-                  <td className="px-4 py-2">{o.valor_estimado ? formatBRL(Number(o.valor_estimado)) : "—"}</td>
-                  <td className="px-4 py-2">{o.safra ?? "—"}</td>
-                  <td className="px-4 py-2">{o.previsao_fechamento ?? "—"}</td>
-                </tr>
+                <OportunidadeRow
+                  key={o.id}
+                  oportunidade={o}
+                  clienteId={id}
+                  vendedores={vendedores ?? []}
+                  podeEditar={podeEditar(o.vendedor_id)}
+                />
               ))}
               {(oportunidades ?? []).length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-4 py-4 text-center text-slate-400">
+                  <td colSpan={5} className="px-4 py-4 text-center text-slate-400">
                     Nenhuma oportunidade registrada.
                   </td>
                 </tr>
@@ -81,41 +80,13 @@ export default async function ClienteDetalhePage({
           </table>
         </div>
 
-        <form action={addOportunidade} className="mt-3 flex flex-wrap items-end gap-3 rounded-lg border border-slate-200 bg-white p-4">
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Estágio</label>
-            <select name="estagio" required className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm">
-              {ESTAGIOS.map((e) => <option key={e} value={e}>{ESTAGIO_LABEL[e]}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Valor estimado (R$)</label>
-            <input type="number" step="0.01" name="valor_estimado" className="mt-1 w-32 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Safra</label>
-            <input name="safra" placeholder="2026/2027 verão" className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Previsão de fechamento</label>
-            <input type="date" name="previsao_fechamento" className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Vendedor</label>
-            <select name="vendedor_id" defaultValue={colaborador?.id} className="mt-1 rounded-md border border-slate-300 px-2 py-1.5 text-sm">
-              {(vendedores ?? []).map((v) => <option key={v.id} value={v.id}>{v.nome}</option>)}
-            </select>
-          </div>
-          <button type="submit" className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700">
-            Adicionar
-          </button>
-        </form>
+        <OportunidadeForm clienteId={id} vendedores={vendedores ?? []} vendedorPadraoId={colaborador?.id} />
       </section>
 
       <section>
         <h2 className="mb-3 text-sm font-semibold text-slate-900">Visitas</h2>
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+          <table className="w-full min-w-[800px] text-sm">
             <thead className="bg-slate-50 text-left text-slate-500">
               <tr>
                 <th className="px-4 py-2 font-medium">Data</th>
@@ -124,22 +95,22 @@ export default async function ClienteDetalhePage({
                 <th className="px-4 py-2 font-medium">Produto recomendado</th>
                 <th className="px-4 py-2 font-medium">Próximo follow-up</th>
                 <th className="px-4 py-2 font-medium">Anotações</th>
+                <th className="px-4 py-2 font-medium" />
               </tr>
             </thead>
             <tbody>
               {(visitas ?? []).map((v) => (
-                <tr key={v.id} className="border-t border-slate-100 align-top">
-                  <td className="px-4 py-2">{v.data_visita}</td>
-                  <td className="px-4 py-2 capitalize">{v.tipo ?? "—"}</td>
-                  <td className="px-4 py-2">{(v.colaboradores as { nome: string } | null)?.nome ?? "—"}</td>
-                  <td className="px-4 py-2">{v.produto_recomendado ?? "—"}</td>
-                  <td className="px-4 py-2">{v.proximo_followup ?? "—"}</td>
-                  <td className="px-4 py-2 max-w-xs whitespace-pre-wrap text-slate-600">{v.anotacoes ?? "—"}</td>
-                </tr>
+                <VisitaRow
+                  key={v.id}
+                  visita={v}
+                  clienteId={id}
+                  vendedores={vendedores ?? []}
+                  podeEditar={podeEditar(v.vendedor_id)}
+                />
               ))}
               {(visitas ?? []).length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-4 text-center text-slate-400">
+                  <td colSpan={7} className="px-4 py-4 text-center text-slate-400">
                     Nenhuma visita registrada.
                   </td>
                 </tr>
@@ -148,41 +119,7 @@ export default async function ClienteDetalhePage({
           </table>
         </div>
 
-        <form action={addVisita} className="mt-3 grid max-w-2xl grid-cols-1 gap-3 rounded-lg border border-slate-200 bg-white p-4 sm:grid-cols-2">
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Data da visita</label>
-            <input type="date" name="data_visita" required className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Tipo</label>
-            <select name="tipo" className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm">
-              {TIPOS_VISITA.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Produto recomendado</label>
-            <input name="produto_recomendado" className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Próximo follow-up</label>
-            <input type="date" name="proximo_followup" className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-          </div>
-          <div className="sm:col-span-2">
-            <label className="block text-xs font-medium text-slate-600">Anotações</label>
-            <textarea name="anotacoes" rows={3} className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-600">Vendedor</label>
-            <select name="vendedor_id" defaultValue={colaborador?.id} className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm">
-              {(vendedores ?? []).map((v) => <option key={v.id} value={v.id}>{v.nome}</option>)}
-            </select>
-          </div>
-          <div className="sm:col-span-2">
-            <button type="submit" className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">
-              Registrar visita
-            </button>
-          </div>
-        </form>
+        <VisitaForm clienteId={id} vendedores={vendedores ?? []} vendedorPadraoId={colaborador?.id} />
       </section>
     </div>
   );
