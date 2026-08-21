@@ -11,7 +11,10 @@ export async function signIn(_prevState: unknown, formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return { error: "E-mail ou senha inválidos." };
+    if (error.message === "Invalid login credentials") {
+      return { error: "E-mail ou senha inválidos." };
+    }
+    return { error: `Erro ao entrar: ${error.message}` };
   }
 
   redirect("/");
