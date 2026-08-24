@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "acelera-faturas-proxy",
+  "main": "src/index.js",
+  "compatibility_date": "2025-01-01",
+  "vars": {
+    "CORA_ENV": "production",
+    "ALLOWED_ORIGIN": "https://acelera.ind.br"
+  },
+  // Preenchido depois de rodar `wrangler cert upload mtls-certificate`
+  // (veja README.md) — substitua SEU_CERTIFICATE_ID pelo ID retornado.
+  "mtls_certificates": [
+    {
+      "binding": "CORA_MTLS",
+      "certificate_id": "SEU_CERTIFICATE_ID"
+    }
+  ]
+}

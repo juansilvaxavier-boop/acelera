@@ -1,124 +1,93 @@
-# Site institucional Acelera — deploy na Hostinger + domínio no registro.br
+# Site institucional Acelera — WordPress.com + domínio acelera.ind.br
 
-Este diretório contém um tema WordPress simples (`wp-theme-acelera/`) para o
-site institucional da Acelera, feito para ser hospedado na Hostinger e
-publicado no domínio **acelera.ind.br** (já registrado no registro.br).
+## O que já está criado (ao vivo, no WordPress.com)
 
-> Eu não tenho acesso à sua conta Hostinger nem ao seu painel do registro.br,
-> então não consigo executar estes passos por você — mas todo o conteúdo já
-> está pronto, e o roteiro abaixo é o suficiente para colar/clicar sem
-> precisar tomar nenhuma decisão técnica nova.
+- **Site:** https://acelera2.wordpress.com (o subdomínio ficou `acelera2` porque
+  `acelera.wordpress.com` já estava em uso por outra conta — isso não afeta o
+  domínio final, que será `acelera.ind.br`).
+- **Painel:** https://acelera2.wordpress.com/wp-admin/
+- **Página "Início"** (rascunho, id 5): hero + seções Sobre/Contato, com
+  placeholders `[edite aqui: ...]` para você preencher com o conteúdo real.
+- **Página "Consulta de Faturas"** (rascunho, id 6, slug `consulta-de-faturas`):
+  um botão que leva para a ferramenta de consulta hospedada separadamente
+  (ver seção 2 — WordPress.com bloqueia formulário/JavaScript embutido nos
+  planos abaixo do Business).
+- Ambas as páginas estão como **rascunho** de propósito — revise o conteúdo
+  antes de publicar.
+- **O site está marcado como privado.** Antes de divulgar, torne-o público em
+  wp-admin → **Configurações → Geral → Visibilidade**.
 
-## O que já está pronto
+## 1. Revisar e publicar o conteúdo
 
-- `wp-theme-acelera/` — tema WordPress completo (cabeçalho, rodapé, página
-  inicial com seções "Sobre" e "Contato", e uma página de **Consulta de
-  Faturas** que integra com o Banco Cora).
-- `wp-config-snippet.php` — bloco de configuração para colar no
-  `wp-config.php`, com as credenciais da Cora (nunca commitado com valores
-  reais).
-- A consulta de faturas foi reimplementada em **PHP** (rota REST do
-  WordPress, `functions.php`), porque o arquivo original `api/faturas.js`
-  é uma função serverless em Node.js (formato Vercel) — que hospedagem
-  compartilhada da Hostinger com WordPress não executa. A rota PHP faz
-  exatamente a mesma coisa: autentica na Cora via mTLS (certificado +
-  chave, nunca expostos ao navegador) e devolve as faturas em aberto.
+1. Acesse o painel e edite a página **Início**: substitua os textos
+   `[edite aqui: ...]` pela descrição real da empresa e pelos dados de
+   contato (e-mail, telefone/WhatsApp, endereço).
+2. Em **Configurações → Leitura**, defina "A página inicial exibe" →
+   **Uma página estática** → escolha **Início**.
+3. Publique as duas páginas (**Publicar**, no canto superior direito do
+   editor) quando estiverem prontas.
+4. Em **Configurações → Geral**, mude a visibilidade do site para público.
 
-## 1. Contratar hospedagem WordPress na Hostinger
+## 2. Consulta de Faturas (integração com a Cora)
 
-1. Em [hostinger.com.br](https://www.hostinger.com.br), contrate um plano
-   de **Hospedagem WordPress** (qualquer plano serve; PHP 8+ é o mínimo).
-2. No assistente de configuração, quando pedir o domínio, escolha
-   **"Já tenho um domínio"** e informe `acelera.ind.br` (não compre um
-   domínio novo — o seu já existe no registro.br).
-3. Finalize a contratação. A Hostinger vai instalar o WordPress
-   automaticamente (ou use hPanel → **Sites** → **Instalar WordPress** se
-   precisar fazer manualmente).
+O WordPress.com "Simple" (qualquer plano até Premium) remove `<form>`,
+`<script>` e `<iframe>` do conteúdo por segurança — não dá pra rodar a busca
+de faturas dentro da própria página do WordPress sem o plano Business
+(R$996/ano). Em vez disso, a busca roda numa página separada, servida por um
+**Cloudflare Worker** já preparado em `site-institucional/faturas-proxy-cf/`
+(free tier, permite uso comercial — ao contrário do Vercel Hobby, que o
+`README.md` deste repositório já evita pelo mesmo motivo no sistema
+principal). A página "Consulta de Faturas" no WordPress é só um botão que
+leva para lá.
 
-## 2. Apontar o domínio acelera.ind.br (registro.br → Hostinger)
+Passo a passo completo (certificado mTLS, deploy, variáveis) está em
+`site-institucional/faturas-proxy-cf/README.md`. Resumo:
 
-Escolha **uma** das duas opções abaixo (não faça as duas):
+1. `cd site-institucional/faturas-proxy-cf && npm install && npx wrangler login`
+2. Subir o certificado da Cora: `npx wrangler cert upload mtls-certificate --cert ... --key ...`
+   e colar o `certificate_id` retornado em `wrangler.jsonc`.
+3. `npx wrangler secret put CORA_CLIENT_ID`
+4. `npm run deploy` — anote a URL gerada (ex.:
+   `https://acelera-faturas-proxy.SEU-SUBDOMINIO.workers.dev`).
+5. No WordPress, edite a página **Consulta de Faturas** e troque o link do
+   botão "Consultar minhas faturas" (atualmente `https://SEU-PROXY.workers.dev/`)
+   pela URL real gerada no passo 4. Me avise a URL e eu atualizo por você.
 
-### Opção A — Trocar os servidores DNS (nameservers) — mais simples
+Se você não for usar a consulta de faturas agora, pode pular esta seção —
+o botão simplesmente não terá destino até ser configurado.
 
-1. No **hPanel da Hostinger**, vá em **Domínios → acelera.ind.br → DNS /
-   Nameservers** e copie os nameservers indicados (algo como
-   `ns1.dns-parking.com` e `ns2.dns-parking.com`, ou os nameservers
-   específicos da sua conta).
-2. Acesse [registro.br](https://registro.br) → **Painel** → seu login →
-   domínio `acelera.ind.br` → **Alterar Servidores DNS (Editar Zona)**.
-3. Substitua os nameservers atuais pelos da Hostinger e salve.
-4. Aguarde a propagação (pode levar de algumas horas até ~24-48h).
+## 3. Apontar acelera.ind.br para o WordPress.com
 
-Com essa opção, toda a gestão de DNS passa a ser feita pelo painel da
-Hostinger.
+**Importante:** conectar um domínio próprio ao WordPress.com exige pelo
+menos o **plano Personal** (R$144/ano) — o plano Free só permite o
+subdomínio `*.wordpress.com`. Ainda não fiz esse upgrade porque envolve
+pagamento; confirme comigo (ou faça você mesmo em wp-admin → **Upgrades →
+Planos**) antes de eu prosseguir.
 
-### Opção B — Manter DNS no registro.br, só apontar os registros
+Depois de ter um plano pago ativo, duas formas de conectar `acelera.ind.br`:
 
-1. No hPanel da Hostinger, veja o **IP do servidor** (hPanel → **Sites** →
-   seu site → **Visão geral**, ou em **Contas de hospedagem**).
-2. No painel do registro.br, em `acelera.ind.br` → **Editar Zona DNS**,
-   crie/ajuste:
-   - Registro **A** para `@` (ou `acelera.ind.br`) apontando para o IP da
-     Hostinger.
-   - Registro **CNAME** para `www` apontando para `acelera.ind.br.`
-3. Salve e aguarde a propagação.
+### Opção A — Mapear o domínio (mantém o registro no registro.br)
 
-## 3. Enviar o tema para o WordPress
+1. Em wp-admin → **Upgrades → Domínios → Adicionar um domínio → Já tenho um
+   domínio**, informe `acelera.ind.br`.
+2. O WordPress.com vai indicar os registros DNS a criar (normalmente um
+   registro **A** apontando para o IP do WordPress.com, mais um **CNAME**
+   para `www`).
+3. No painel do [registro.br](https://registro.br), em `acelera.ind.br` →
+   **Editar Zona DNS**, crie esses registros exatamente como indicado.
 
-1. Compacte a pasta `wp-theme-acelera/` inteira em um arquivo `.zip`
-   chamado, por exemplo, `wp-theme-acelera.zip` (o `.zip` precisa conter a
-   pasta `wp-theme-acelera` na raiz, com `style.css` dentro dela).
-2. No WP Admin (`https://acelera.ind.br/wp-admin`) vá em **Aparência →
-   Temas → Adicionar novo → Enviar tema**, selecione o `.zip` e clique em
-   **Instalar agora**.
-3. Clique em **Ativar**.
+### Opção B — Trocar os nameservers para o WordPress.com
 
-## 4. Criar as páginas
+1. Em wp-admin → **Upgrades → Domínios → acelera.ind.br → DNS**, veja os
+   nameservers do WordPress.com (geralmente `ns1.wordpress.com` e
+   `ns2.wordpress.com`).
+2. No registro.br → `acelera.ind.br` → **Alterar Servidores DNS**, troque
+   para esses nameservers.
+3. Toda a gestão de DNS passa a ser feita pelo painel do WordPress.com.
 
-1. **Páginas → Adicionar nova**, título "Início" (não precisa de
-   conteúdo no editor — o layout vem de `front-page.php`). Publique.
-2. Em **Configurações → Leitura**, deixe como está (o tema usa
-   `front-page.php` automaticamente); se preferir, defina explicitamente
-   "Uma página estática" com a página "Início" escolhida.
-3. **Páginas → Adicionar nova**, título "Consulta de Faturas", slug
-   `consulta-de-faturas`. No painel **Atributos da página** (lado
-   direito), em **Modelo**, selecione **"Consulta de Faturas"**. Publique.
+Qualquer uma das opções pode levar algumas horas até 48h para propagar.
 
-## 5. Configurar a integração com a Cora (opcional, só se for usar a consulta de faturas)
+## 4. SSL
 
-1. Envie os arquivos de certificado (`cora-cert.pem`) e chave privada
-   (`cora-key.pem`) fornecidos pela Cora para o servidor **fora** da pasta
-   `public_html` — por exemplo, crie uma pasta `cora/` no diretório home
-   da conta (acessível via **Gerenciador de Arquivos** do hPanel ou FTP),
-   um nível acima de `public_html`.
-2. Abra `wp-config.php` (raiz do WordPress) pelo Gerenciador de Arquivos e
-   cole o conteúdo de `wp-config-snippet.php` **antes** da linha
-   `/* That's all, stop editing! */`, preenchendo:
-   - `ACELERA_CORA_CLIENT_ID` com o client_id da Cora;
-   - os caminhos `ACELERA_CORA_CERT_PATH` / `ACELERA_CORA_KEY_PATH` com o
-     caminho absoluto real dos arquivos enviados no passo anterior.
-3. Se não for usar a consulta de faturas agora, pode pular este passo — a
-   página simplesmente mostrará "Integração com a Cora ainda não
-   configurada neste ambiente."
-
-## 6. Ativar HTTPS
-
-No hPanel, vá em **Sites → acelera.ind.br → SSL** e ative o certificado
-gratuito (Let's Encrypt). Depois, em **Aparência → Personalizar** ou em
-**Configurações → Geral**, confirme que a URL do site está como
-`https://acelera.ind.br`.
-
-## 7. Editar o conteúdo real
-
-Os textos de "Sobre" e "Contato" na página inicial (`front-page.php`)
-estão com placeholders marcados `<!-- TODO -->`. Edite diretamente esse
-arquivo (reenviando o tema atualizado) com as informações reais da
-empresa: descrição, e-mail, telefone/WhatsApp e endereço.
-
-## 8. Testar
-
-- Acesse `https://acelera.ind.br` e confira o layout.
-- Acesse `https://acelera.ind.br/consulta-de-faturas/`, informe um
-  CPF/CNPJ de teste e confirme que a consulta responde (ou mostra a
-  mensagem de integração não configurada, se você ainda não fez o passo 5).
+O WordPress.com emite certificado SSL automaticamente para domínios
+conectados — não precisa configurar nada manualmente.

@@ -23,7 +23,6 @@
 # misc
 .DS_Store
 *.pem
-site-institucional/wp-theme-acelera.zip
 
 # debug
 npm-debug.log*
