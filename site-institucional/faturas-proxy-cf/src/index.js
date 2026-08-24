@@ -85,7 +85,7 @@ function paginaConsulta() {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Consulta de Faturas — Acelera</title>
+<title>Consulta de Faturas — Acelera Fertilizantes</title>
 <style>
   :root { color-scheme: light; }
   * { box-sizing: border-box; }
@@ -95,12 +95,12 @@ function paginaConsulta() {
   p.lead { color: #5b6470; margin: 0 0 24px; }
   form { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
   input { flex: 1; min-width: 220px; padding: 12px 14px; border: 1px solid #e4e7eb; border-radius: 8px; font-size: 1rem; }
-  button { padding: 12px 22px; border: 0; border-radius: 999px; background: #1a56db; color: #fff; font-weight: 600; cursor: pointer; }
-  button:hover { opacity: .9; }
+  button { padding: 12px 22px; border: 0; border-radius: 4px; background: #035927; color: #fff; font-weight: 700; cursor: pointer; }
+  button:hover { background: #02431D; }
   #status { color: #5b6470; margin: 12px 0; }
   ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 12px; }
-  li { border: 1px solid #e4e7eb; border-radius: 12px; padding: 16px; }
-  li a { color: #1a56db; }
+  li { border: 1px solid #e4e7eb; border-radius: 4px; padding: 16px; border-left: 3px solid #C49855; }
+  li a { color: #035927; font-weight: 700; }
 </style>
 </head>
 <body>

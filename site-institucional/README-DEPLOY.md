@@ -6,27 +6,43 @@
   `acelera.wordpress.com` já estava em uso por outra conta — isso não afeta o
   domínio final, que será `acelera.ind.br`).
 - **Painel:** https://acelera2.wordpress.com/wp-admin/
-- **Página "Início"** (rascunho, id 5): hero + seções Sobre/Contato, com
-  placeholders `[edite aqui: ...]` para você preencher com o conteúdo real.
-- **Página "Consulta de Faturas"** (rascunho, id 6, slug `consulta-de-faturas`):
-  um botão que leva para a ferramenta de consulta hospedada separadamente
-  (ver seção 2 — WordPress.com bloqueia formulário/JavaScript embutido nos
-  planos abaixo do Business).
-- Ambas as páginas estão como **rascunho** de propósito — revise o conteúdo
-  antes de publicar.
+- Conteúdo reconstruído a partir do design de referência que você enviou
+  (`Acelera Fertilizantes`), com a logo real, cores da marca (verde
+  `#035927` / dourado `#C49855`) e os textos, produtos, telefone/WhatsApp
+  (+55 17 98123-6203), e-mail (contato@acelera.ind.br) e endereço (Rua
+  Maria Ceron Volpe, 1705 — Vila Toninho, São José do Rio Preto/SP) reais
+  do arquivo original.
+- **Páginas criadas** (todas como rascunho, propositalmente, para você revisar
+  antes de publicar):
+  - **Início** (id 5) — hero, estatísticas, "Por que a Acelera".
+  - **Sobre nós** (id 13, slug `sobre-nos`) — texto institucional + 4 pilares.
+  - **Linha de produtos** (id 14, slug `linha-de-produtos`) — os 12 produtos
+    reais, agrupados pelas 5 linhas, cada um com link de orçamento no WhatsApp.
+  - **Trabalhe conosco** (id 15, slug `trabalhe-conosco`) — áreas + candidatura
+    via WhatsApp/e-mail (sem formulário, pelo mesmo motivo da seção 2).
+  - **Consulta de Faturas** (id 6, slug `consulta-de-faturas`) — botão que leva
+    para a ferramenta de consulta hospedada separadamente (ver seção 2).
+  - **Contato** (id 16, slug `contato`) — WhatsApp, e-mail, endereço, redes
+    sociais (Facebook/Instagram/TikTok/LinkedIn reais).
+- **Cabeçalho e rodapé** já atualizados com a logo real, menu de navegação
+  apontando para as 6 páginas acima, e dados de contato reais no rodapé — falta
+  só confirmar o **horário de atendimento** (deixei um placeholder
+  `[edite: horário de atendimento]`, pois não veio no material original).
 - **O site está marcado como privado.** Antes de divulgar, torne-o público em
   wp-admin → **Configurações → Geral → Visibilidade**.
 
 ## 1. Revisar e publicar o conteúdo
 
-1. Acesse o painel e edite a página **Início**: substitua os textos
-   `[edite aqui: ...]` pela descrição real da empresa e pelos dados de
-   contato (e-mail, telefone/WhatsApp, endereço).
-2. Em **Configurações → Leitura**, defina "A página inicial exibe" →
-   **Uma página estática** → escolha **Início**.
-3. Publique as duas páginas (**Publicar**, no canto superior direito do
-   editor) quando estiverem prontas.
-4. Em **Configurações → Geral**, mude a visibilidade do site para público.
+1. Acesse o painel e revise as 6 páginas listadas acima — o conteúdo já é o
+   real (extraído do arquivo que você enviou), mas vale conferir.
+2. Preencha o horário de atendimento no rodapé (**Aparência → Editor → Padrões
+   → Footer**, ou peça pra eu fazer assim que você me passar o horário).
+3. Em **Configurações → Leitura**, defina "A página inicial exibe" →
+   **Uma página estática** → escolha **Início** (só é possível depois de
+   publicar a página, veja o próximo passo).
+4. Publique as 6 páginas (**Publicar**, no canto superior direito do editor)
+   quando estiverem prontas.
+5. Em **Configurações → Geral**, mude a visibilidade do site para público.
 
 ## 2. Consulta de Faturas (integração com a Cora)
 
