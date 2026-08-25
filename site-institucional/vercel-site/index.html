@@ -533,6 +533,9 @@
   .form-success{ display:none; align-items:center; gap:10px; background:var(--ok-bg); color:var(--ok); border-radius:12px; padding:12px 14px; font-size:.86rem; font-weight:700; margin-top:14px; }
   .form-success.show{ display:flex; }
   .form-success svg{ width:16px; height:16px; flex:none; }
+  .form-error{ display:none; align-items:center; gap:10px; background:var(--bad-bg); color:var(--bad); border-radius:12px; padding:12px 14px; font-size:.86rem; font-weight:700; margin-top:14px; }
+  .form-error.show{ display:flex; }
+  .form-error svg{ width:16px; height:16px; flex:none; }
 
   /* ============ FATURAS / CORA ============ */
   .cora-shell{ background:var(--surface); border:1px solid var(--line); border-radius:20px; overflow:hidden; }
@@ -974,8 +977,9 @@
               <textarea id="wMensagem" name="mensagem" placeholder="Conte um pouco sobre sua experiência"></textarea>
             </div>
             <button class="btn btn-primary" type="submit" style="width:100%">Enviar candidatura</button>
-            <p class="form-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16h.01" /></svg>Este formulário é uma demonstração visual do site. Para receber candidaturas de verdade, conecte-o a um e-mail ou sistema de recrutamento (ATS) no backend.</p>
-            <div class="form-success" id="workSuccess"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" /></svg>Candidatura recebida (demonstração) — nenhum dado foi enviado de verdade.</div>
+            <p class="form-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16h.01" /></svg>Currículo em PDF, até 5MB. Sua candidatura chega direto por e-mail para a nossa equipe.</p>
+            <div class="form-success" id="workSuccess"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" /></svg>Candidatura enviada! Nossa equipe vai analisar e entrar em contato.</div>
+            <div class="form-error" id="workError"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16h.01" /></svg><span id="workErrorText">Não foi possível enviar. Tente novamente.</span></div>
           </form>
         </div>
       </div>
@@ -1145,7 +1149,8 @@
               <textarea id="ctMsg" required placeholder="Como podemos ajudar?"></textarea>
             </div>
             <button class="btn btn-primary" type="submit" style="width:100%">Enviar mensagem</button>
-            <div class="form-success" id="contactSuccess"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" /></svg>Mensagem enviada (demonstração).</div>
+            <div class="form-success" id="contactSuccess"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" /></svg>Mensagem enviada! Vamos responder em breve.</div>
+            <div class="form-error" id="contactError"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16h.01" /></svg><span id="contactErrorText">Não foi possível enviar. Tente novamente.</span></div>
           </form>
         </div>
 
@@ -1932,27 +1937,131 @@ var FALLBACK_DATA = {
     showPage(currentPageFromHash(), { silent:true });
   };
 
-  // ---- trabalhe conosco demo form ----
+  // ---- utilidades compartilhadas dos formulários (envio real por e-mail) ----
+  var MAX_CURRICULO_BYTES = 5 * 1024 * 1024; // 5MB
+  function fileToBase64(file){
+    return new Promise(function(resolve, reject){
+      var reader = new FileReader();
+      reader.onload = function(){
+        var result = String(reader.result || "");
+        var comma = result.indexOf(",");
+        resolve(comma >= 0 ? result.slice(comma + 1) : result);
+      };
+      reader.onerror = function(){ reject(reader.error || new Error("Falha ao ler o arquivo.")); };
+      reader.readAsDataURL(file);
+    });
+  }
+  function setFormBusy(form, busy){
+    var btn = form.querySelector("button[type=submit]");
+    if(!btn) return;
+    if(busy){
+      btn.dataset.originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Enviando…";
+    } else {
+      btn.disabled = false;
+      if(btn.dataset.originalText) btn.textContent = btn.dataset.originalText;
+    }
+  }
+
+  // ---- trabalhe conosco: candidatura por e-mail ----
   var workForm = document.getElementById("workForm");
   var workSuccess = document.getElementById("workSuccess");
+  var workError = document.getElementById("workError");
+  var workErrorText = document.getElementById("workErrorText");
   if(workForm){
     workForm.addEventListener("submit", function(e){
       e.preventDefault();
       if(!workForm.checkValidity()){ workForm.reportValidity(); return; }
-      workSuccess.classList.add("show");
-      workForm.reset();
+      if(workError) workError.classList.remove("show");
+      if(workSuccess) workSuccess.classList.remove("show");
+
+      var curriculoInput = document.getElementById("wCurriculo");
+      var curriculoFile = curriculoInput && curriculoInput.files && curriculoInput.files[0];
+      if(curriculoFile && curriculoFile.size > MAX_CURRICULO_BYTES){
+        if(workErrorText) workErrorText.textContent = "O currículo é muito grande. Envie um PDF de até 5MB.";
+        if(workError) workError.classList.add("show");
+        return;
+      }
+
+      setFormBusy(workForm, true);
+
+      var payload = {
+        nome: document.getElementById("wNome").value,
+        telefone: document.getElementById("wTelefone").value,
+        email: document.getElementById("wEmail").value,
+        area: document.getElementById("wArea").value,
+        mensagem: document.getElementById("wMensagem").value,
+      };
+
+      (curriculoFile ? fileToBase64(curriculoFile) : Promise.resolve(null))
+        .then(function(base64){
+          if(base64){ payload.curriculo = { filename: curriculoFile.name, mimeType: curriculoFile.type, contentBase64: base64 }; }
+          return fetch("/api/trabalhe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+        })
+        .then(function(r){ return r.json().then(function(data){ return { ok:r.ok, data:data }; }); })
+        .then(function(res){
+          setFormBusy(workForm, false);
+          if(!res.ok){
+            if(workErrorText) workErrorText.textContent = (res.data && res.data.error) || "Não foi possível enviar. Tente novamente.";
+            if(workError) workError.classList.add("show");
+            return;
+          }
+          if(workSuccess) workSuccess.classList.add("show");
+          workForm.reset();
+        })
+        .catch(function(){
+          setFormBusy(workForm, false);
+          if(workErrorText) workErrorText.textContent = "Erro de conexão. Tente novamente.";
+          if(workError) workError.classList.add("show");
+        });
     });
   }
 
-  // ---- contato demo form ----
+  // ---- contato: mensagem por e-mail ----
   var contactForm = document.getElementById("contactForm");
   var contactSuccess = document.getElementById("contactSuccess");
+  var contactError = document.getElementById("contactError");
+  var contactErrorText = document.getElementById("contactErrorText");
   if(contactForm){
     contactForm.addEventListener("submit", function(e){
       e.preventDefault();
       if(!contactForm.checkValidity()){ contactForm.reportValidity(); return; }
-      contactSuccess.classList.add("show");
-      contactForm.reset();
+      if(contactError) contactError.classList.remove("show");
+      if(contactSuccess) contactSuccess.classList.remove("show");
+      setFormBusy(contactForm, true);
+
+      var payload = {
+        nome: document.getElementById("ctNome").value,
+        email: document.getElementById("ctEmail").value,
+        mensagem: document.getElementById("ctMsg").value,
+      };
+
+      fetch("/api/contato", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(function(r){ return r.json().then(function(data){ return { ok:r.ok, data:data }; }); })
+        .then(function(res){
+          setFormBusy(contactForm, false);
+          if(!res.ok){
+            if(contactErrorText) contactErrorText.textContent = (res.data && res.data.error) || "Não foi possível enviar. Tente novamente.";
+            if(contactError) contactError.classList.add("show");
+            return;
+          }
+          if(contactSuccess) contactSuccess.classList.add("show");
+          contactForm.reset();
+        })
+        .catch(function(){
+          setFormBusy(contactForm, false);
+          if(contactErrorText) contactErrorText.textContent = "Erro de conexão. Tente novamente.";
+          if(contactError) contactError.classList.add("show");
+        });
     });
   }
 
