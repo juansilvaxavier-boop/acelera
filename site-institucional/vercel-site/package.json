@@ -1,0 +1,6 @@
+{
+  "name": "acelera-site-institucional",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site institucional da Acelera Fertilizantes (estático) + proxy serverless para consulta de faturas na Cora."
+}
