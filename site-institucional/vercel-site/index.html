@@ -1578,7 +1578,13 @@ var FALLBACK_DATA = {
         sb.from("site_content").select("key,value")
       ]);
       var linesRes = results[0], productsRes = results[1], contentRes = results[2];
-      if (linesRes.error || productsRes.error || contentRes.error) { return; }
+      if (linesRes.error || productsRes.error || contentRes.error) {
+        if (window.console && console.warn) {
+          console.warn("Acelera: erro ao buscar dados do Supabase, usando conteudo padrao.",
+            linesRes.error, productsRes.error, contentRes.error);
+        }
+        return;
+      }
       if (!linesRes.data || !productsRes.data || linesRes.data.length === 0 || productsRes.data.length === 0) { return; }
 
       var lines = linesRes.data.map(function(l){
@@ -1605,10 +1611,12 @@ var FALLBACK_DATA = {
       }
     } catch (e) {
       // network unreachable or Supabase not configured yet — keep fallback content
+      if (window.console && console.warn) { console.warn("Acelera: falha ao carregar dados do Supabase, usando conteudo padrao.", e); }
     }
   }
 
   loadFromSupabase();
+  window.__acelera.reloadData = loadFromSupabase;
 })();
 </script>
 
