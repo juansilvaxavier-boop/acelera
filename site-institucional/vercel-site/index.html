@@ -560,6 +560,18 @@
   .login-card .btn{ width:100%; margin-top:8px; }
   .login-hint{ margin-top:18px; font-size:.76rem; color:rgba(255,255,255,.55); }
 
+  .login-tabs{ display:flex; gap:8px; margin-top:22px; }
+  .login-tab{
+    flex:1; text-align:center; font-size:.8rem; font-weight:700; padding:9px 10px; border-radius:999px;
+    border:1px solid rgba(255,255,255,.25); background:transparent; color:rgba(255,255,255,.72); cursor:pointer;
+    transition:background-color .2s ease, color .2s ease;
+  }
+  .login-tab.active{ background:#fff; color:var(--brand-green-deep); border-color:#fff; }
+  .login-error{ margin-top:14px; font-size:.8rem; color:#ffb4b0; min-height:1em; }
+
+  .dash-greeting{ font-size:.92rem; color:var(--ink-soft); margin-bottom:20px; }
+  .dash-greeting strong{ color:var(--ink); }
+
   .dash-view{ display:none; padding:28px 24px 8px; }
   .dash-view.show{ display:block; }
   .dash-summary{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:28px; }
@@ -986,41 +998,78 @@
               <span class="brand-logo" role="img" aria-label="Acelera Fertilizantes"></span>
               <span>Portal do Cliente</span>
             </div>
-            <span class="tag">Ambiente de demonstração</span>
+            <span class="tag" id="coraStatusTag">Login protegido por senha</span>
           </div>
 
           <div class="login-view" id="loginView">
             <div class="glow-field"><div class="glow-orb gold" style="width:240px;height:240px;left:-60px;top:-40px"></div><div class="glow-orb green" style="width:280px;height:280px;right:-70px;bottom:-60px;animation-delay:-6s"></div></div>
-            <form class="login-card" id="loginForm" novalidate>
+            <div class="login-card">
               <span class="brand-logo" role="img" aria-label="Acelera Fertilizantes"></span>
-              <h3>Entrar na sua conta</h3>
-              <p>Use o CPF/CNPJ cadastrado para consultar suas faturas Acelera.</p>
-              <div class="field">
-                <label for="cCpf">CPF ou CNPJ</label>
-                <input id="cCpf" type="text" placeholder="000.000.000-00" required />
+              <div class="login-tabs" role="tablist">
+                <button type="button" class="login-tab active" id="tabEntrar" role="tab" aria-selected="true">Entrar</button>
+                <button type="button" class="login-tab" id="tabCriar" role="tab" aria-selected="false">Criar conta</button>
               </div>
-              <div class="field">
-                <label for="cSenha">Senha</label>
-                <input id="cSenha" type="password" placeholder="••••••••" required />
-              </div>
-              <button class="btn btn-primary" type="submit">Entrar e ver faturas</button>
-              <p class="login-hint">Ambiente de demonstração — qualquer valor mostra dados de exemplo, sem conexão real com o Cora ainda.</p>
-            </form>
+
+              <form id="loginForm" novalidate>
+                <h3>Entrar na sua conta</h3>
+                <p>Use o CPF/CNPJ e a senha cadastrados para consultar suas faturas Acelera.</p>
+                <div class="field">
+                  <label for="cCpf">CPF ou CNPJ</label>
+                  <input id="cCpf" type="text" placeholder="000.000.000-00" required />
+                </div>
+                <div class="field">
+                  <label for="cSenha">Senha</label>
+                  <input id="cSenha" type="password" placeholder="••••••••" required />
+                </div>
+                <button class="btn btn-primary" type="submit">Entrar e ver faturas</button>
+                <p class="login-error" id="loginError"></p>
+              </form>
+
+              <form id="signupForm" novalidate style="display:none">
+                <h3>Criar sua conta</h3>
+                <p>Cadastre uma senha própria — assim só você consulta as faturas do seu CPF/CNPJ.</p>
+                <div class="field">
+                  <label for="sNome">Nome completo</label>
+                  <input id="sNome" type="text" placeholder="Seu nome" required />
+                </div>
+                <div class="field">
+                  <label for="sCpf">CPF ou CNPJ</label>
+                  <input id="sCpf" type="text" placeholder="000.000.000-00" required />
+                </div>
+                <div class="field">
+                  <label for="sEmail">E-mail (opcional)</label>
+                  <input id="sEmail" type="email" placeholder="voce@email.com" />
+                </div>
+                <div class="field">
+                  <label for="sSenha">Senha</label>
+                  <input id="sSenha" type="password" placeholder="Mínimo 6 caracteres" required minlength="6" />
+                </div>
+                <div class="field">
+                  <label for="sSenha2">Confirmar senha</label>
+                  <input id="sSenha2" type="password" placeholder="Repita a senha" required minlength="6" />
+                </div>
+                <button class="btn btn-primary" type="submit">Criar conta e ver faturas</button>
+                <p class="login-error" id="signupError"></p>
+              </form>
+
+              <p class="login-hint">Seus dados de acesso ficam protegidos por senha — cada CPF/CNPJ só visualiza as próprias faturas.</p>
+            </div>
           </div>
 
           <div class="dash-view" id="dashView">
+            <p class="dash-greeting">Olá, <strong id="dashUserName"></strong> — aqui estão suas faturas.</p>
             <div class="dash-summary">
               <div class="sum-card warn">
                 <span class="kicker">Total em aberto</span>
-                <b>R$ 4.860,00</b>
+                <b>—</b>
               </div>
               <div class="sum-card">
                 <span class="kicker">Próximo vencimento</span>
-                <b>05/09/2026</b>
+                <b>—</b>
               </div>
               <div class="sum-card bad">
                 <span class="kicker">Faturas vencidas</span>
-                <b>1</b>
+                <b>—</b>
               </div>
             </div>
 
@@ -1029,50 +1078,19 @@
                 <thead>
                   <tr><th>Nº</th><th>Descrição</th><th>Vencimento</th><th>Valor</th><th>Status</th><th></th></tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="num">0231</td>
-                    <td>Adubo Líquido — 3 tambores</td>
-                    <td>10/08/2026</td>
-                    <td class="num">R$ 2.140,00</td>
-                    <td><span class="status-chip pago">Pago</span></td>
-                    <td><a class="row-action" href="#">Ver recibo</a></td>
-                  </tr>
-                  <tr>
-                    <td class="num">0244</td>
-                    <td>Acelera N30 — 5 tambores</td>
-                    <td>28/08/2026</td>
-                    <td class="num">R$ 1.780,00</td>
-                    <td><span class="status-chip vencido">Vencido</span></td>
-                    <td><a class="row-action" href="#">Ver boleto</a></td>
-                  </tr>
-                  <tr>
-                    <td class="num">0251</td>
-                    <td>Gesso Líquido — 2 tambores</td>
-                    <td>05/09/2026</td>
-                    <td class="num">R$ 1.480,00</td>
-                    <td><span class="status-chip aberto">Em aberto</span></td>
-                    <td><a class="row-action" href="#">Copiar Pix</a></td>
-                  </tr>
-                  <tr>
-                    <td class="num">0259</td>
-                    <td>Gel de Plantio — 10un</td>
-                    <td>18/09/2026</td>
-                    <td class="num">R$ 1.600,00</td>
-                    <td><span class="status-chip aberto">Em aberto</span></td>
-                    <td><a class="row-action" href="#">Copiar Pix</a></td>
-                  </tr>
+                <tbody id="invoicesBody">
+                  <tr><td colspan="6" style="text-align:center;color:var(--ink-faint);padding:24px;">Carregando suas faturas…</td></tr>
                 </tbody>
               </table>
             </div>
 
             <div class="cora-explainer">
               <h4>Como funciona a integração com a API do Cora</h4>
-              <p>Os dados acima são <strong>de exemplo</strong>, apenas para mostrar como a área de faturas vai funcionar. A integração real consulta a API do Cora para trazer boletos, Pix e status de pagamento atualizados automaticamente.</p>
-              <p>Por segurança, essa consulta precisa passar por um servidor (backend) que guarda as credenciais do Cora — Client ID e certificado digital — protegidas. Elas não podem ficar expostas no site. Assim que vocês tiverem a conta Cora com API habilitada, conectamos essa tela aos dados reais.</p>
+              <p>O login acima já é real: cada cliente cria sua própria senha e só enxerga as faturas ligadas ao próprio CPF/CNPJ. Os valores exibidos na tabela, porém, ainda são <strong>de exemplo</strong> — a consulta às faturas de verdade depende da API do Cora, que ainda não foi conectada.</p>
+              <p>Por segurança, essa consulta precisa passar por um servidor (backend) que guarda as credenciais do Cora — Client ID e certificado digital — protegidas. Elas não podem ficar expostas no site. Assim que a conta Cora com API habilitada estiver disponível, basta preencher as variáveis de ambiente na Vercel — sem mudar mais nada aqui — que esta tela passa a mostrar os dados reais.</p>
             </div>
 
-            <div style="margin-top:20px"><a class="btn btn-ghost btn-sm" href="#" id="logoutBtn">Sair da demonstração</a></div>
+            <div style="margin-top:20px"><a class="btn btn-ghost btn-sm" href="#" id="logoutBtn">Sair da conta</a></div>
           </div>
         </div>
       </div>
@@ -1938,11 +1956,19 @@ var FALLBACK_DATA = {
     });
   }
 
-  // ---- faturas / cora demo login ----
-  var loginForm = document.getElementById("loginForm");
+  // ---- faturas / cora: login e cadastro reais de clientes ----
   var loginView = document.getElementById("loginView");
   var dashView = document.getElementById("dashView");
+  var loginForm = document.getElementById("loginForm");
+  var signupForm = document.getElementById("signupForm");
+  var tabEntrar = document.getElementById("tabEntrar");
+  var tabCriar = document.getElementById("tabCriar");
+  var loginError = document.getElementById("loginError");
+  var signupError = document.getElementById("signupError");
   var logoutBtn = document.getElementById("logoutBtn");
+  var coraStatusTag = document.getElementById("coraStatusTag");
+  var dashUserName = document.getElementById("dashUserName");
+
   function formatBRL(n){
     return (n||0).toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
   }
@@ -1951,17 +1977,29 @@ var FALLBACK_DATA = {
     var d = new Date(iso + "T00:00:00");
     return isNaN(d.getTime()) ? iso : d.toLocaleDateString("pt-BR");
   }
+  function showLoginTab(tab){
+    var isEntrar = tab === "entrar";
+    if(tabEntrar) tabEntrar.classList.toggle("active", isEntrar);
+    if(tabCriar) tabCriar.classList.toggle("active", !isEntrar);
+    if(tabEntrar) tabEntrar.setAttribute("aria-selected", String(isEntrar));
+    if(tabCriar) tabCriar.setAttribute("aria-selected", String(!isEntrar));
+    if(loginForm) loginForm.style.display = isEntrar ? "" : "none";
+    if(signupForm) signupForm.style.display = isEntrar ? "none" : "";
+  }
+  if(tabEntrar) tabEntrar.addEventListener("click", function(){ showLoginTab("entrar"); });
+  if(tabCriar) tabCriar.addEventListener("click", function(){ showLoginTab("criar"); });
+
   function renderFaturas(items){
-    var tbody = document.querySelector("table.invoices tbody");
+    var tbody = document.getElementById("invoicesBody");
     if(!tbody) return;
     if(!items || !items.length){
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--ink-faint);padding:24px;">Nenhuma fatura em aberto encontrada para este documento.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--ink-faint);padding:24px;">Nenhuma fatura em aberto encontrada.</td></tr>';
     } else {
       tbody.innerHTML = items.map(function(inv, i){
         var statusMap = { PAID:["pago","Pago"], LATE:["vencido","Vencido"], OPEN:["aberto","Em aberto"], CANCELLED:["vencido","Cancelada"], DRAFT:["aberto","Rascunho"] };
         var st = statusMap[inv.status] || ["aberto","Em aberto"];
         var actionHref = inv.boleto || "#";
-        var actionLabel = inv.pix ? "Copiar Pix" : "Ver boleto";
+        var actionLabel = inv.status === "PAID" ? "Ver recibo" : (inv.pix ? "Copiar Pix" : "Ver boleto");
         return '<tr><td class="num">' + String(i+1).padStart(4,"0") + '</td><td>' + inv.descricao + '</td><td>' +
           formatDateBR(inv.vencimento) + '</td><td class="num">' + formatBRL(inv.valor) + '</td><td><span class="status-chip ' +
           st[0] + '">' + st[1] + '</span></td><td><a class="row-action" href="' + actionHref + '" target="_blank" rel="noopener">' + actionLabel + '</a></td></tr>';
@@ -1976,26 +2014,91 @@ var FALLBACK_DATA = {
     if(cards[1]) cards[1].textContent = proximo ? formatDateBR(proximo) : "—";
     if(cards[2]) cards[2].textContent = vencidas;
   }
+
+  function loadFaturas(){
+    var tbody = document.getElementById("invoicesBody");
+    if(tbody){ tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--ink-faint);padding:24px;">Carregando suas faturas…</td></tr>'; }
+    fetch("/api/faturas", { credentials:"include" })
+      .then(function(r){ return r.json().then(function(data){ return { ok:r.ok, data:data }; }); })
+      .then(function(res){
+        if(!res.ok){ renderFaturas([]); return; }
+        if(coraStatusTag){ coraStatusTag.textContent = res.data.configured ? "Conectado à Cora" : "Login protegido · dados de exemplo"; }
+        renderFaturas(res.data.items || []);
+      })
+      .catch(function(){ renderFaturas([]); });
+  }
+
+  function showDash(nome){
+    if(loginView) loginView.style.display = "none";
+    if(dashView) dashView.classList.add("show");
+    if(dashUserName) dashUserName.textContent = nome || "";
+    loadFaturas();
+  }
+  function showLogin(){
+    if(dashView) dashView.classList.remove("show");
+    if(loginView) loginView.style.display = "";
+  }
+
+  // Restaura a sessão (se o cliente já tiver logado antes e o cookie ainda for válido)
+  fetch("/api/auth/me", { credentials:"include" })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){ if(data){ showDash(data.nome); } })
+    .catch(function(){ /* sem sessão ainda / API indisponível neste ambiente */ });
+
   if(loginForm){
     loginForm.addEventListener("submit", function(e){
       e.preventDefault();
-      loginView.style.display = "none";
-      dashView.classList.add("show");
-      var doc = (document.getElementById("cCpf").value || "").replace(/\D/g, "");
-      if(doc){
-        fetch("/api/faturas?documento=" + encodeURIComponent(doc))
-          .then(function(r){ if(!r.ok) throw new Error("cora-api-unavailable"); return r.json(); })
-          .then(function(data){ if(data && data.items){ renderFaturas(data.items); } })
-          .catch(function(){ /* sem backend/credenciais ainda: mantém os dados de exemplo já no HTML */ });
-      }
+      if(loginError) loginError.textContent = "";
+      var cpf = (document.getElementById("cCpf").value || "").trim();
+      var senha = document.getElementById("cSenha").value || "";
+      fetch("/api/auth/login", {
+        method: "POST", credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cpf_cnpj: cpf, password: senha })
+      })
+        .then(function(r){ return r.json().then(function(data){ return { ok:r.ok, data:data }; }); })
+        .then(function(res){
+          if(!res.ok){ if(loginError) loginError.textContent = (res.data && res.data.error) || "Não foi possível entrar."; return; }
+          loginForm.reset();
+          showDash(res.data.nome);
+        })
+        .catch(function(){ if(loginError) loginError.textContent = "Erro de conexão. Tente novamente."; });
     });
   }
+
+  if(signupForm){
+    signupForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      if(signupError) signupError.textContent = "";
+      var nome = (document.getElementById("sNome").value || "").trim();
+      var cpf = (document.getElementById("sCpf").value || "").trim();
+      var email = (document.getElementById("sEmail").value || "").trim();
+      var senha = document.getElementById("sSenha").value || "";
+      var senha2 = document.getElementById("sSenha2").value || "";
+      if(senha !== senha2){ if(signupError) signupError.textContent = "As senhas não coincidem."; return; }
+      fetch("/api/auth/signup", {
+        method: "POST", credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome: nome, cpf_cnpj: cpf, email: email, password: senha })
+      })
+        .then(function(r){ return r.json().then(function(data){ return { ok:r.ok, data:data }; }); })
+        .then(function(res){
+          if(!res.ok){ if(signupError) signupError.textContent = (res.data && res.data.error) || "Não foi possível criar a conta."; return; }
+          signupForm.reset();
+          showDash(res.data.nome);
+        })
+        .catch(function(){ if(signupError) signupError.textContent = "Erro de conexão. Tente novamente."; });
+    });
+  }
+
   if(logoutBtn){
     logoutBtn.addEventListener("click", function(e){
       e.preventDefault();
-      dashView.classList.remove("show");
-      loginView.style.display = "";
-      loginForm.reset();
+      fetch("/api/auth/logout", { method: "POST", credentials: "include" }).catch(function(){});
+      showLogin();
+      showLoginTab("entrar");
+      if(loginForm) loginForm.reset();
+      if(loginError) loginError.textContent = "";
     });
   }
 

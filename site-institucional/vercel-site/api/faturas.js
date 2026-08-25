@@ -5,10 +5,21 @@
 // e essas credenciais NUNCA podem ficar no navegador/frontend — só aqui,
 // como variáveis de ambiente do lado do servidor.
 //
-// Rota exposta ao site: GET /api/faturas?documento=12345678900
-// Resposta: { items: [ { id, descricao, vencimento, valor, status, boleto, linhaDigitavel, pix } ] }
+// O CPF/CNPJ consultado vem SEMPRE da sessão do cliente autenticado (cookie
+// httpOnly criado em /api/auth/login ou /api/auth/signup) — nunca de um
+// parâmetro que o navegador poderia enviar, para que ninguém consiga ver
+// faturas de outro CPF/CNPJ só trocando um valor na requisição.
+//
+// Rota exposta ao site: GET /api/faturas  (precisa de sessão válida)
+// Resposta: { configured: boolean, items: [ { id, descricao, vencimento, valor, status, boleto, linhaDigitavel, pix } ] }
+//
+// Enquanto CORA_CLIENT_ID/CORA_CERT/CORA_KEY não estiverem configurados nas
+// variáveis de ambiente da Vercel, devolve dados de exemplo com
+// configured:false. Assim que essas variáveis forem preenchidas, a mesma
+// rota passa a consultar a API real da Cora — sem precisar mudar o frontend.
 
 const https = require("https");
+const { getSession } = require("./_lib/session");
 
 let cachedToken = null;
 let cachedTokenExpiry = 0;
@@ -20,6 +31,13 @@ const TOKEN_HOST =
     : "matls-clients.api.cora.com.br";
 const API_HOST =
   CORA_ENV === "stage" ? "api.stage.cora.com.br" : "api.cora.com.br";
+
+const DEMO_ITEMS = [
+  { descricao: "Adubo Líquido — 3 tambores", vencimento: "2026-08-10", valor: 2140, status: "PAID", boleto: "#", pix: null },
+  { descricao: "Acelera N30 — 5 tambores", vencimento: "2026-08-28", valor: 1780, status: "LATE", boleto: "#", pix: null },
+  { descricao: "Gesso Líquido — 2 tambores", vencimento: "2026-09-05", valor: 1480, status: "OPEN", boleto: "#", pix: "00020126giro" },
+  { descricao: "Gel de Plantio — 10un", vencimento: "2026-09-18", valor: 1600, status: "OPEN", boleto: "#", pix: "00020126giro" },
+];
 
 function pem(value) {
   // Permite colar o certificado/chave como uma linha só (com \n escapado)
@@ -104,22 +122,25 @@ function mapInvoice(inv) {
 
 module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", process.env.ALLOWED_ORIGIN || "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   if (req.method === "OPTIONS") {
     res.status(200).end();
     return;
   }
 
-  const documento = String(req.query.documento || "").replace(/\D/g, "");
-  if (!documento) {
-    res.status(400).json({ error: "Informe o parâmetro documento (CPF ou CNPJ, apenas números)." });
+  const session = getSession(req);
+  if (!session || !session.cpf_cnpj) {
+    res.status(401).json({ error: "É preciso entrar na sua conta para ver as faturas." });
     return;
   }
+  const documento = String(session.cpf_cnpj).replace(/\D/g, "");
 
   if (!process.env.CORA_CLIENT_ID || !process.env.CORA_CERT || !process.env.CORA_KEY) {
-    // Credenciais da Cora ainda não configuradas neste deploy.
-    // O frontend trata este 503 caindo de volta para os dados de exemplo.
-    res.status(503).json({ error: "Integração com a Cora ainda não configurada neste ambiente." });
+    // Credenciais da Cora ainda não configuradas neste deploy: devolve
+    // dados de exemplo, já protegidos por sessão, para a tela funcionar
+    // de ponta a ponta antes de a integração real estar pronta.
+    res.status(200).json({ configured: false, items: DEMO_ITEMS });
     return;
   }
 
@@ -134,7 +155,7 @@ module.exports = async (req, res) => {
     });
 
     const list = Array.isArray(invoices) ? invoices : invoices.items || invoices.data || [];
-    res.status(200).json({ items: list.map(mapInvoice) });
+    res.status(200).json({ configured: true, items: list.map(mapInvoice) });
   } catch (err) {
     console.error("Erro ao consultar a Cora:", err);
     res.status(502).json({ error: "Não foi possível consultar as faturas na Cora agora." });
