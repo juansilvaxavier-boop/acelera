@@ -398,32 +398,38 @@
   .line-tab[aria-selected="true"]{ background:var(--line-color, var(--brand-green-deep)); border-color:var(--line-color, var(--brand-green-deep)); color:#fff; }
   .line-tab[aria-selected="true"] .swatch{ background:#fff; }
 
-  .product-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:28px; }
+  .product-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:56px 28px; }
   @media (max-width:1024px){ .product-grid{ grid-template-columns:repeat(3,1fr); } }
   @media (max-width:760px){ .product-grid{ grid-template-columns:repeat(2,1fr); gap:20px; } }
   @media (max-width:480px){ .product-grid{ grid-template-columns:1fr; } }
 
-  .product-card{ display:flex; flex-direction:column; gap:14px; }
+  .product-card{ display:flex; flex-direction:column; }
   .product-shot{
-    position:relative; aspect-ratio:1/1; border-radius:20px; overflow:hidden;
-    background:var(--surface); border:1px solid var(--line);
-    display:flex; align-items:center; justify-content:center; padding:22px;
+    position:relative; z-index:2; height:230px; margin:0 14px -56px; pointer-events:none;
+  }
+  @media (max-width:760px){ .product-shot{ height:210px; } }
+  .product-shot img{
+    width:100%; height:100%; object-fit:contain; display:block;
+    filter:drop-shadow(0 18px 22px rgba(16,20,24,.16)); transition:transform .3s ease;
+  }
+  .product-card:hover .product-shot img{ transform:translateY(-4px); }
+
+  .product-info{
+    position:relative; z-index:1; background:var(--bg); border:1px solid var(--line); border-radius:22px;
+    padding:64px 20px 22px; display:flex; align-items:flex-end; justify-content:space-between; gap:10px;
     transition:border-color .2s ease;
   }
-  .product-shot img{ width:100%; height:100%; object-fit:contain; display:block; transition:transform .3s ease; }
-  .product-card:hover .product-shot img{ transform:scale(1.05); }
-  .product-card:hover .product-shot{ border-color:var(--line-color, var(--brand-green-deep)); }
+  .product-card:hover .product-info{ border-color:var(--line-color, var(--brand-green-deep)); }
+  .product-info h3{ font-size:1.2rem; font-weight:800; margin:0; color:var(--line-color, var(--brand-green-deep)); line-height:1.15; }
+  .product-info span{ display:block; margin-top:4px; font-size:.86rem; color:var(--ink-faint); }
 
   .product-arrow{
-    position:absolute; top:14px; right:14px; width:38px; height:38px; border-radius:50%;
+    position:absolute; right:-8px; bottom:-8px; width:42px; height:42px; border-radius:50%;
     background:var(--line-color, var(--brand-green-deep)); color:#fff; display:flex; align-items:center; justify-content:center;
-    text-decoration:none; box-shadow:0 6px 16px -6px rgba(0,0,0,.35); transition:transform .2s ease;
+    text-decoration:none; box-shadow:0 8px 20px -8px rgba(0,0,0,.4); transition:transform .2s ease; flex:none;
   }
-  .product-arrow svg{ width:16px; height:16px; }
+  .product-arrow svg{ width:17px; height:17px; }
   .product-card:hover .product-arrow{ transform:scale(1.08); }
-
-  .product-info h3{ font-size:1rem; font-weight:700; margin:0; }
-  .product-info span{ display:block; margin-top:4px; font-size:.86rem; color:var(--ink-faint); }
 
   .products-cta{ margin-top:48px; padding:44px 32px; border-radius:20px; text-align:center; background:var(--surface); border:1px solid var(--line); }
   .products-cta h3{ font-size:1.35rem; margin-bottom:10px; }
@@ -581,18 +587,11 @@
       <div class="nav-item-dropdown">
         <a href="#produtos" data-nav="produtos" class="nav-link-trigger">Produtos<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.75 8 10.25l4.5-4.5" /></svg></a>
         <div class="nav-dropdown-panel">
-          <a href="#produto-acelera-calcio-fertil" data-nav="produto-acelera-calcio-fertil">Acelera Cálcio Fértil</a>
-      <a href="#produto-acelera-humics" data-nav="produto-acelera-humics">Acelera Humics</a>
-      <a href="#produto-leonardita-super-black" data-nav="produto-leonardita-super-black">Leonardita Super Black</a>
-      <a href="#produto-potencer-orange" data-nav="produto-potencer-orange">Potencer Orange</a>
-      <a href="#produto-super-hidrogel" data-nav="produto-super-hidrogel">Super Hidrogel</a>
-      <a href="#produto-acelera-fosfito-de-cobre" data-nav="produto-acelera-fosfito-de-cobre">Acelera Fosfito de Cobre</a>
-      <a href="#produto-acelera-induthor" data-nav="produto-acelera-induthor">Acelera Induthor</a>
-      <a href="#produto-acelera-florada" data-nav="produto-acelera-florada">Acelera Florada</a>
-      <a href="#produto-acelera-max-micro" data-nav="produto-acelera-max-micro">Acelera Max Micro</a>
-      <a href="#produto-acelera-cafe" data-nav="produto-acelera-cafe">Acelera Café</a>
-      <a href="#produto-acelera-completo" data-nav="produto-acelera-completo">Acelera Completo</a>
-      <a href="#produto-acelera-aminoalgas" data-nav="produto-acelera-aminoalgas">Acelera Aminoalgas</a>
+          <a href="#produtos" data-line="solo">Linha Solo</a>
+          <a href="#produtos" data-line="foliar">Linha Foliar</a>
+          <a href="#produtos" data-line="adjuvantes">Linha Adjuvantes</a>
+          <a href="#produtos" data-line="hidrogel">Super Hidrogel</a>
+          <a href="#produtos" data-line="protecao">Proteção e Controle</a>
         </div>
       </div>
       <a href="#trabalhe" data-nav="trabalhe">Trabalhe conosco</a>
@@ -617,18 +616,11 @@
       <summary>Produtos</summary>
       <div class="mobile-subnav">
         <a href="#produtos" data-nav="produtos">Ver todos os produtos</a>
-      <a href="#produto-acelera-calcio-fertil" data-nav="produto-acelera-calcio-fertil">Acelera Cálcio Fértil</a>
-      <a href="#produto-acelera-humics" data-nav="produto-acelera-humics">Acelera Humics</a>
-      <a href="#produto-leonardita-super-black" data-nav="produto-leonardita-super-black">Leonardita Super Black</a>
-      <a href="#produto-potencer-orange" data-nav="produto-potencer-orange">Potencer Orange</a>
-      <a href="#produto-super-hidrogel" data-nav="produto-super-hidrogel">Super Hidrogel</a>
-      <a href="#produto-acelera-fosfito-de-cobre" data-nav="produto-acelera-fosfito-de-cobre">Acelera Fosfito de Cobre</a>
-      <a href="#produto-acelera-induthor" data-nav="produto-acelera-induthor">Acelera Induthor</a>
-      <a href="#produto-acelera-florada" data-nav="produto-acelera-florada">Acelera Florada</a>
-      <a href="#produto-acelera-max-micro" data-nav="produto-acelera-max-micro">Acelera Max Micro</a>
-      <a href="#produto-acelera-cafe" data-nav="produto-acelera-cafe">Acelera Café</a>
-      <a href="#produto-acelera-completo" data-nav="produto-acelera-completo">Acelera Completo</a>
-      <a href="#produto-acelera-aminoalgas" data-nav="produto-acelera-aminoalgas">Acelera Aminoalgas</a>
+      <a href="#produtos" data-line="solo">Linha Solo</a>
+      <a href="#produtos" data-line="foliar">Linha Foliar</a>
+      <a href="#produtos" data-line="adjuvantes">Linha Adjuvantes</a>
+      <a href="#produtos" data-line="hidrogel">Super Hidrogel</a>
+      <a href="#produtos" data-line="protecao">Proteção e Controle</a>
       </div>
     </details>
     <a href="#trabalhe" data-nav="trabalhe">Trabalhe conosco</a>
@@ -699,44 +691,52 @@
           <article class="product-card reveal" data-line="solo" style="--line-color:var(--line-solo)">
             <div class="product-shot">
               <img src="images/produtos/acelera-calcio-fertil.jpg" alt="Frasco Acelera Cálcio Fértil" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-calcio-fertil" data-route="produto-acelera-calcio-fertil" aria-label="Ver produto: Acelera Cálcio Fértil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Cálcio Fértil</h3>
-              <span>Aplicação solo</span>
+              <div class="product-info-text">
+                <h3>Cálcio Fértil</h3>
+                <span>Aplicação solo</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-calcio-fertil" data-route="produto-acelera-calcio-fertil" aria-label="Ver produto: Acelera Cálcio Fértil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="adjuvantes" style="--line-color:var(--line-adjuvantes)">
             <div class="product-shot">
               <img src="images/produtos/potencer-orange.jpg" alt="Frasco Potencer Orange" loading="lazy" />
-              <a class="product-arrow" href="#produto-potencer-orange" data-route="produto-potencer-orange" aria-label="Ver produto: Potencer Orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Potencer Orange</h3>
-              <span>Adjuvante</span>
+              <div class="product-info-text">
+                <h3>Potencer Orange</h3>
+                <span>Adjuvante</span>
+              </div>
+              <a class="product-arrow" href="#produto-potencer-orange" data-route="produto-potencer-orange" aria-label="Ver produto: Potencer Orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="hidrogel" style="--line-color:var(--line-hidrogel)">
             <div class="product-shot">
               <img src="images/produtos/super-hidrogel.jpg" alt="Frasco Super Hidrogel" loading="lazy" />
-              <a class="product-arrow" href="#produto-super-hidrogel" data-route="produto-super-hidrogel" aria-label="Ver produto: Super Hidrogel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Super Hidrogel</h3>
-              <span>Condicionador · 10kg</span>
+              <div class="product-info-text">
+                <h3>Super Hidrogel</h3>
+                <span>Condicionador · 10kg</span>
+              </div>
+              <a class="product-arrow" href="#produto-super-hidrogel" data-route="produto-super-hidrogel" aria-label="Ver produto: Super Hidrogel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
             <div class="product-shot">
               <img src="images/produtos/acelera-florada.jpg" alt="Frasco Acelera Florada" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-florada" data-route="produto-acelera-florada" aria-label="Ver produto: Acelera Florada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Florada</h3>
-              <span>Aplicação foliar</span>
+              <div class="product-info-text">
+                <h3>Florada</h3>
+                <span>Aplicação foliar</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-florada" data-route="produto-acelera-florada" aria-label="Ver produto: Acelera Florada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
         </div>
@@ -829,132 +829,156 @@
           <article class="product-card reveal" data-line="solo" style="--line-color:var(--line-solo)">
             <div class="product-shot">
               <img src="images/produtos/acelera-calcio-fertil.jpg" alt="Frasco Acelera Cálcio Fértil" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-calcio-fertil" data-route="produto-acelera-calcio-fertil" aria-label="Ver produto: Acelera Cálcio Fértil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Cálcio Fértil</h3>
-              <span>Aplicação solo</span>
+              <div class="product-info-text">
+                <h3>Cálcio Fértil</h3>
+                <span>Aplicação solo</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-calcio-fertil" data-route="produto-acelera-calcio-fertil" aria-label="Ver produto: Acelera Cálcio Fértil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="solo" style="--line-color:var(--line-solo)">
             <div class="product-shot">
               <img src="images/produtos/acelera-humics.jpg" alt="Frasco Acelera Humics" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-humics" data-route="produto-acelera-humics" aria-label="Ver produto: Acelera Humics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Humics</h3>
-              <span>Condicionador</span>
+              <div class="product-info-text">
+                <h3>Humics</h3>
+                <span>Condicionador</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-humics" data-route="produto-acelera-humics" aria-label="Ver produto: Acelera Humics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="solo" style="--line-color:var(--line-solo)">
             <div class="product-shot">
               <img src="images/produtos/leonardita-super-black.jpg" alt="Frasco Leonardita Super Black" loading="lazy" />
-              <a class="product-arrow" href="#produto-leonardita-super-black" data-route="produto-leonardita-super-black" aria-label="Ver produto: Leonardita Super Black"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Leonardita Super Black</h3>
-              <span>Condicionador</span>
+              <div class="product-info-text">
+                <h3>Leonardita Super Black</h3>
+                <span>Condicionador</span>
+              </div>
+              <a class="product-arrow" href="#produto-leonardita-super-black" data-route="produto-leonardita-super-black" aria-label="Ver produto: Leonardita Super Black"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="adjuvantes" style="--line-color:var(--line-adjuvantes)">
             <div class="product-shot">
               <img src="images/produtos/potencer-orange.jpg" alt="Frasco Potencer Orange" loading="lazy" />
-              <a class="product-arrow" href="#produto-potencer-orange" data-route="produto-potencer-orange" aria-label="Ver produto: Potencer Orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Potencer Orange</h3>
-              <span>Adjuvante</span>
+              <div class="product-info-text">
+                <h3>Potencer Orange</h3>
+                <span>Adjuvante</span>
+              </div>
+              <a class="product-arrow" href="#produto-potencer-orange" data-route="produto-potencer-orange" aria-label="Ver produto: Potencer Orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="hidrogel" style="--line-color:var(--line-hidrogel)">
             <div class="product-shot">
               <img src="images/produtos/super-hidrogel.jpg" alt="Frasco Super Hidrogel" loading="lazy" />
-              <a class="product-arrow" href="#produto-super-hidrogel" data-route="produto-super-hidrogel" aria-label="Ver produto: Super Hidrogel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Super Hidrogel</h3>
-              <span>Condicionador · 10kg</span>
+              <div class="product-info-text">
+                <h3>Super Hidrogel</h3>
+                <span>Condicionador · 10kg</span>
+              </div>
+              <a class="product-arrow" href="#produto-super-hidrogel" data-route="produto-super-hidrogel" aria-label="Ver produto: Super Hidrogel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="protecao" style="--line-color:var(--line-protecao)">
             <div class="product-shot">
               <img src="images/produtos/acelera-fosfito-de-cobre.jpg" alt="Frasco Acelera Fosfito de Cobre" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-fosfito-de-cobre" data-route="produto-acelera-fosfito-de-cobre" aria-label="Ver produto: Acelera Fosfito de Cobre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Fosfito de Cobre</h3>
-              <span>Proteção</span>
+              <div class="product-info-text">
+                <h3>Fosfito de Cobre</h3>
+                <span>Proteção</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-fosfito-de-cobre" data-route="produto-acelera-fosfito-de-cobre" aria-label="Ver produto: Acelera Fosfito de Cobre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="protecao" style="--line-color:var(--line-protecao)">
             <div class="product-shot">
               <img src="images/produtos/acelera-induthor.jpg" alt="Frasco Acelera Induthor" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-induthor" data-route="produto-acelera-induthor" aria-label="Ver produto: Acelera Induthor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Induthor</h3>
-              <span>Proteção</span>
+              <div class="product-info-text">
+                <h3>Induthor</h3>
+                <span>Proteção</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-induthor" data-route="produto-acelera-induthor" aria-label="Ver produto: Acelera Induthor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
             <div class="product-shot">
               <img src="images/produtos/acelera-florada.jpg" alt="Frasco Acelera Florada" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-florada" data-route="produto-acelera-florada" aria-label="Ver produto: Acelera Florada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Florada</h3>
-              <span>Aplicação foliar</span>
+              <div class="product-info-text">
+                <h3>Florada</h3>
+                <span>Aplicação foliar</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-florada" data-route="produto-acelera-florada" aria-label="Ver produto: Acelera Florada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
             <div class="product-shot">
               <img src="images/produtos/acelera-max-micro.jpg" alt="Frasco Acelera Max Micro" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-max-micro" data-route="produto-acelera-max-micro" aria-label="Ver produto: Acelera Max Micro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Max Micro</h3>
-              <span>Aplicação foliar</span>
+              <div class="product-info-text">
+                <h3>Max Micro</h3>
+                <span>Aplicação foliar</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-max-micro" data-route="produto-acelera-max-micro" aria-label="Ver produto: Acelera Max Micro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
             <div class="product-shot">
               <img src="images/produtos/acelera-cafe.jpg" alt="Frasco Acelera Café" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-cafe" data-route="produto-acelera-cafe" aria-label="Ver produto: Acelera Café"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Café</h3>
-              <span>Aplicação foliar</span>
+              <div class="product-info-text">
+                <h3>Café</h3>
+                <span>Aplicação foliar</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-cafe" data-route="produto-acelera-cafe" aria-label="Ver produto: Acelera Café"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
             <div class="product-shot">
               <img src="images/produtos/acelera-completo.jpg" alt="Frasco Acelera Completo" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-completo" data-route="produto-acelera-completo" aria-label="Ver produto: Acelera Completo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Completo</h3>
-              <span>Aplicação foliar</span>
+              <div class="product-info-text">
+                <h3>Completo</h3>
+                <span>Aplicação foliar</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-completo" data-route="produto-acelera-completo" aria-label="Ver produto: Acelera Completo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
 
           <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
             <div class="product-shot">
               <img src="images/produtos/acelera-aminoalgas.jpg" alt="Frasco Acelera Aminoalgas" loading="lazy" />
-              <a class="product-arrow" href="#produto-acelera-aminoalgas" data-route="produto-acelera-aminoalgas" aria-label="Ver produto: Acelera Aminoalgas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
             <div class="product-info">
-              <h3>Acelera Aminoalgas</h3>
-              <span>Aplicação foliar</span>
+              <div class="product-info-text">
+                <h3>Aminoalgas</h3>
+                <span>Aplicação foliar</span>
+              </div>
+              <a class="product-arrow" href="#produto-acelera-aminoalgas" data-route="produto-acelera-aminoalgas" aria-label="Ver produto: Acelera Aminoalgas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
             </div>
           </article>
         </div>
@@ -2033,12 +2057,10 @@
     tab.addEventListener("click", function(){ filterLine(tab.getAttribute("data-line")); });
   });
   document.querySelectorAll("a[data-line]").forEach(function(a){
-    if(a.closest(".foot-col")){
-      a.addEventListener("click", function(){
-        var line = a.getAttribute("data-line");
-        setTimeout(function(){ filterLine(line); }, 0);
-      });
-    }
+    a.addEventListener("click", function(){
+      var line = a.getAttribute("data-line");
+      setTimeout(function(){ filterLine(line); }, 0);
+    });
   });
 
   // ---- trabalhe conosco demo form ----
