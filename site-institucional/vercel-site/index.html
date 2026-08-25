@@ -586,13 +586,7 @@
       <a href="#sobre" data-nav="sobre">Sobre nós</a>
       <div class="nav-item-dropdown">
         <a href="#produtos" data-nav="produtos" class="nav-link-trigger">Produtos<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.75 8 10.25l4.5-4.5" /></svg></a>
-        <div class="nav-dropdown-panel">
-          <a href="#produtos" data-line="solo">Linha Solo</a>
-          <a href="#produtos" data-line="foliar">Linha Foliar</a>
-          <a href="#produtos" data-line="adjuvantes">Linha Adjuvantes</a>
-          <a href="#produtos" data-line="hidrogel">Super Hidrogel</a>
-          <a href="#produtos" data-line="protecao">Proteção e Controle</a>
-        </div>
+        <div class="nav-dropdown-panel" id="navDropdownLines"></div>
       </div>
       <a href="#trabalhe" data-nav="trabalhe">Trabalhe conosco</a>
       <a href="#faturas" data-nav="faturas">Faturas em aberto</a>
@@ -614,14 +608,7 @@
     <a href="#sobre" data-nav="sobre">Sobre nós</a>
     <details>
       <summary>Produtos</summary>
-      <div class="mobile-subnav">
-        <a href="#produtos" data-nav="produtos">Ver todos os produtos</a>
-      <a href="#produtos" data-line="solo">Linha Solo</a>
-      <a href="#produtos" data-line="foliar">Linha Foliar</a>
-      <a href="#produtos" data-line="adjuvantes">Linha Adjuvantes</a>
-      <a href="#produtos" data-line="hidrogel">Super Hidrogel</a>
-      <a href="#produtos" data-line="protecao">Proteção e Controle</a>
-      </div>
+      <div class="mobile-subnav" id="mobileSubnavLines"></div>
     </details>
     <a href="#trabalhe" data-nav="trabalhe">Trabalhe conosco</a>
     <a href="#faturas" data-nav="faturas">Faturas em aberto</a>
@@ -636,12 +623,12 @@
     <section class="hero-full">
       <div class="glow-field"><div class="glow-orb gold" style="width:320px;height:320px;left:-60px;top:-40px"></div><div class="glow-orb green" style="width:380px;height:380px;right:-80px;bottom:-80px;animation-delay:-9s"></div></div>
       <div class="container hero-full-inner">
-        <span class="kicker">Fertilizantes líquidos · Suporte agronômico</span>
-        <h1 class="reveal">O campo <em>acelera</em><br />com a gente.</h1>
-        <p class="hero-full-lede reveal">Fabricamos e distribuímos fertilizantes e condicionadores de solo de alta performance para produtores de todo o Brasil, com acompanhamento técnico do plantio à colheita.</p>
+        <span class="kicker" data-content-key="hero_kicker">Fertilizantes líquidos · Suporte agronômico</span>
+        <h1 class="reveal" data-content-key="hero_title_html" data-content-html="1">O campo <em>acelera</em><br />com a gente.</h1>
+        <p class="hero-full-lede reveal" data-content-key="hero_lede">Fabricamos e distribuímos fertilizantes e condicionadores de solo de alta performance para produtores de todo o Brasil, com acompanhamento técnico do plantio à colheita.</p>
         <div class="hero-full-actions reveal">
-          <a class="btn btn-primary" href="#produtos" data-route="produtos">Ver linha de produtos</a>
-          <a class="btn btn-outline" href="https://wa.me/5517981236203" target="_blank" rel="noopener" style="border-color:rgba(255,255,255,.4); color:#fff;">Falar com um especialista</a>
+          <a class="btn btn-primary" href="#produtos" data-route="produtos" data-content-key="hero_cta_primary_label">Ver linha de produtos</a>
+          <a class="btn btn-outline" href="https://wa.me/5517981236203" target="_blank" rel="noopener" style="border-color:rgba(255,255,255,.4); color:#fff;" data-content-key="hero_cta_secondary_label">Falar com um especialista</a>
         </div>
         <dl class="hero-stats-flat reveal">
           <div><dt>Frete</dt><dd>Grátis para todo o Brasil</dd></div>
@@ -660,7 +647,7 @@
           <div class="intro-photo photo-c"><span>Produtos em campo</span></div>
         </div>
         <div class="intro-copy reveal">
-          <h2>Mais do que fertilizantes, oferecemos soluções para você produzir melhor.</h2>
+          <h2 data-content-key="about_title">Mais do que fertilizantes, oferecemos soluções para você produzir melhor.</h2>
           <p>Nós conhecemos os desafios do produtor e trabalhamos para sua produtividade não parar. Do início ao fim do ciclo produtivo, oferecemos produtos e serviços que te ajudam a extrair o máximo potencial da sua lavoura.</p>
           <div class="benefit-grid">
             <div class="benefit-card">
@@ -685,61 +672,9 @@
             <span class="kicker">Catálogo</span>
             <p>Conheça as soluções que irão ajudar a impulsionar os resultados da sua lavoura.</p>
           </div>
-          <h2>Um pouco da nossa linha de produtos</h2>
+          <h2 data-content-key="catalog_section_title">Um pouco da nossa linha de produtos</h2>
         </div>
-        <div class="product-grid">
-          <article class="product-card reveal" data-line="solo" style="--line-color:var(--line-solo)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-calcio-fertil.webp" alt="Frasco Acelera Cálcio Fértil" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Cálcio Fértil</h3>
-                <span>Aplicação solo</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-calcio-fertil" data-route="produto-acelera-calcio-fertil" aria-label="Ver produto: Acelera Cálcio Fértil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="adjuvantes" style="--line-color:var(--line-adjuvantes)">
-            <div class="product-shot">
-              <img src="images/produtos/potencer-orange.webp" alt="Frasco Potencer Orange" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Potencer Orange</h3>
-                <span>Adjuvante</span>
-              </div>
-              <a class="product-arrow" href="#produto-potencer-orange" data-route="produto-potencer-orange" aria-label="Ver produto: Potencer Orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="hidrogel" style="--line-color:var(--line-hidrogel)">
-            <div class="product-shot">
-              <img src="images/produtos/super-hidrogel.webp" alt="Frasco Super Hidrogel" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Super Hidrogel</h3>
-                <span>Condicionador · 10kg</span>
-              </div>
-              <a class="product-arrow" href="#produto-super-hidrogel" data-route="produto-super-hidrogel" aria-label="Ver produto: Super Hidrogel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-florada.webp" alt="Frasco Acelera Florada" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Florada</h3>
-                <span>Aplicação foliar</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-florada" data-route="produto-acelera-florada" aria-label="Ver produto: Acelera Florada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-        </div>
+        <div class="product-grid" id="homeProductGrid"></div>
         <div class="catalog-preview-foot">
           <a class="btn btn-primary" href="#produtos" data-route="produtos">Ver catálogo completo</a>
         </div>
@@ -768,7 +703,7 @@
       <div class="container">
         <div class="section-head reveal">
           <span class="kicker">Quem somos</span>
-          <h2>Comprometidos com o produtor rural</h2>
+          <h2 data-content-key="institutional_section_title">Comprometidos com o produtor rural</h2>
         </div>
         <div class="about-grid">
           <div class="about-copy">
@@ -812,795 +747,17 @@
             <span class="kicker">Linha de produtos</span>
             <p>Da correção de solo à nutrição foliar, cada linha Acelera resolve uma etapa da sua safra. Filtre por linha ou fale com nosso time técnico para montar o programa ideal para a sua cultura.</p>
           </div>
-          <h2>Cinco linhas, uma lavoura mais produtiva</h2>
+          <h2 data-content-key="products_page_title">Cinco linhas, uma lavoura mais produtiva</h2>
         </div>
 
-        <div class="line-tabs" role="tablist" aria-label="Filtrar por linha de produto" id="lineTabs">
-          <button class="line-tab" role="tab" aria-selected="true" data-line="all" style="--line-color:var(--ink)"><span class="swatch"></span>Todas as linhas</button>
-          <button class="line-tab" role="tab" aria-selected="false" data-line="solo" style="--line-color:var(--line-solo)"><span class="swatch"></span>Linha Solo</button>
-          <button class="line-tab" role="tab" aria-selected="false" data-line="foliar" style="--line-color:var(--line-foliar)"><span class="swatch"></span>Linha Foliar</button>
-          <button class="line-tab" role="tab" aria-selected="false" data-line="adjuvantes" style="--line-color:var(--line-adjuvantes)"><span class="swatch"></span>Linha Adjuvantes</button>
-          <button class="line-tab" role="tab" aria-selected="false" data-line="hidrogel" style="--line-color:var(--line-hidrogel)"><span class="swatch"></span>Super Hidrogel</button>
-          <button class="line-tab" role="tab" aria-selected="false" data-line="protecao" style="--line-color:var(--line-protecao)"><span class="swatch"></span>Proteção e Controle</button>
-        </div>
+        <div class="line-tabs" role="tablist" aria-label="Filtrar por linha de produto" id="lineTabs"></div>
 
-        <div class="product-grid" id="productGrid">
-
-          <article class="product-card reveal" data-line="solo" style="--line-color:var(--line-solo)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-calcio-fertil.webp" alt="Frasco Acelera Cálcio Fértil" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Cálcio Fértil</h3>
-                <span>Aplicação solo</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-calcio-fertil" data-route="produto-acelera-calcio-fertil" aria-label="Ver produto: Acelera Cálcio Fértil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="solo" style="--line-color:var(--line-solo)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-humics.webp" alt="Frasco Acelera Humics" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Humics</h3>
-                <span>Condicionador</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-humics" data-route="produto-acelera-humics" aria-label="Ver produto: Acelera Humics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="solo" style="--line-color:var(--line-solo)">
-            <div class="product-shot">
-              <img src="images/produtos/leonardita-super-black.webp" alt="Frasco Leonardita Super Black" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Leonardita Super Black</h3>
-                <span>Condicionador</span>
-              </div>
-              <a class="product-arrow" href="#produto-leonardita-super-black" data-route="produto-leonardita-super-black" aria-label="Ver produto: Leonardita Super Black"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="adjuvantes" style="--line-color:var(--line-adjuvantes)">
-            <div class="product-shot">
-              <img src="images/produtos/potencer-orange.webp" alt="Frasco Potencer Orange" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Potencer Orange</h3>
-                <span>Adjuvante</span>
-              </div>
-              <a class="product-arrow" href="#produto-potencer-orange" data-route="produto-potencer-orange" aria-label="Ver produto: Potencer Orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="hidrogel" style="--line-color:var(--line-hidrogel)">
-            <div class="product-shot">
-              <img src="images/produtos/super-hidrogel.webp" alt="Frasco Super Hidrogel" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Super Hidrogel</h3>
-                <span>Condicionador · 10kg</span>
-              </div>
-              <a class="product-arrow" href="#produto-super-hidrogel" data-route="produto-super-hidrogel" aria-label="Ver produto: Super Hidrogel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="protecao" style="--line-color:var(--line-protecao)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-fosfito-de-cobre.webp" alt="Frasco Acelera Fosfito de Cobre" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Fosfito de Cobre</h3>
-                <span>Proteção</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-fosfito-de-cobre" data-route="produto-acelera-fosfito-de-cobre" aria-label="Ver produto: Acelera Fosfito de Cobre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-florada.webp" alt="Frasco Acelera Florada" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Florada</h3>
-                <span>Aplicação foliar</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-florada" data-route="produto-acelera-florada" aria-label="Ver produto: Acelera Florada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-max-micro.webp" alt="Frasco Acelera Max Micro" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Max Micro</h3>
-                <span>Aplicação foliar</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-max-micro" data-route="produto-acelera-max-micro" aria-label="Ver produto: Acelera Max Micro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-cafe.webp" alt="Frasco Acelera Café" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Café</h3>
-                <span>Aplicação foliar</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-cafe" data-route="produto-acelera-cafe" aria-label="Ver produto: Acelera Café"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-completo.jpg" alt="Frasco Acelera Completo" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Completo</h3>
-                <span>Aplicação foliar</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-completo" data-route="produto-acelera-completo" aria-label="Ver produto: Acelera Completo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-
-          <article class="product-card reveal" data-line="foliar" style="--line-color:var(--line-foliar)">
-            <div class="product-shot">
-              <img src="images/produtos/acelera-aminoalgas.webp" alt="Frasco Acelera Aminoalgas" loading="lazy" />
-            </div>
-            <div class="product-info">
-              <div class="product-info-text">
-                <h3>Aminoalgas</h3>
-                <span>Aplicação foliar</span>
-              </div>
-              <a class="product-arrow" href="#produto-acelera-aminoalgas" data-route="produto-acelera-aminoalgas" aria-label="Ver produto: Acelera Aminoalgas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
-            </div>
-          </article>
-        </div>
+        <div class="product-grid" id="productGrid"></div>
 
         <div class="products-cta reveal">
           <h3>Não sabe por onde começar?</h3>
           <p>Conte pra gente a sua cultura e a nossa equipe monta um programa de nutrição com as linhas certas para a sua safra.</p>
           <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Quero%20montar%20um%20programa%20de%20nutri%C3%A7%C3%A3o%20com%20a%20Acelera." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-acelera-calcio-fertil">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/acelera-calcio-fertil.webp" alt="Acelera Cálcio Fértil">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-solo)">
-            <span class="product-tag">Aplicação solo</span>
-            <h1>Acelera Cálcio Fértil</h1>
-            <p class="product-detail-lede">Fertilizante líquido à base de cálcio e magnésio, formulado para reposição direta no solo de forma prática e eficiente.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20C%C3%A1lcio%20F%C3%A9rtil%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-solo)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Acelera Cálcio Fértil é um fertilizante líquido que repõe cálcio e magnésio no solo, dois nutrientes essenciais que costumam ficar escassos em solos ácidos ou muito explorados. Por ser líquido, tem absorção mais rápida do que fontes sólidas tradicionais.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para corrigir deficiências de cálcio e magnésio no solo, nutrientes fundamentais para a formação da parede celular das plantas e para o bom desenvolvimento radicular. É indicado tanto na preparação da área quanto ao longo do ciclo da cultura.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Fortalece a parede celular das plantas</li>
-                <li>Melhora a estrutura e a fertilidade do solo</li>
-                <li>Reduz problemas ligados à deficiência de cálcio</li>
-                <li>Absorção mais rápida do que fontes sólidas de cálcio</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Formulação líquida de alta solubilidade</li>
-                <li>Compatível com outros insumos líquidos em mistura de tanque</li>
-                <li>Aplicação simples via pulverização ou fertirrigação</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Cálcio Fértil, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Acelera Cálcio Fértil?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20C%C3%A1lcio%20F%C3%A9rtil%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-acelera-humics">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/acelera-humics.webp" alt="Acelera Humics">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-solo)">
-            <span class="product-tag">Condicionador</span>
-            <h1>Acelera Humics</h1>
-            <p class="product-detail-lede">Fertilizante organo-mineral de alta qualidade, derivado da Leonardita Australiana, rico em ácidos húmicos e fúlvicos.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Humics%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-solo)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Acelera Humics é um fertilizante organo-mineral produzido a partir da Leonardita Australiana, uma matéria-prima natural rica em ácidos húmicos e fúlvicos — substâncias orgânicas que atuam diretamente na melhoria do solo.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para melhorar a atividade biológica e a estrutura do solo, aumentando a eficiência dos fertilizantes aplicados junto e criando um ambiente mais favorável para o desenvolvimento das raízes.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Aumenta a capacidade de troca catiônica (CTC) do solo</li>
-                <li>Estimula o desenvolvimento do sistema radicular</li>
-                <li>Melhora a retenção de água e nutrientes no solo</li>
-                <li>Potencializa a absorção de adubações complementares</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Matéria-prima de alta pureza (Leonardita Australiana)</li>
-                <li>Alta concentração de ácidos húmicos e fúlvicos</li>
-                <li>Compatível com programas de fertirrigação</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Humics, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Acelera Humics?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Humics%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-leonardita-super-black">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/leonardita-super-black.webp" alt="Leonardita Super Black">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-solo)">
-            <span class="product-tag">Condicionador</span>
-            <h1>Leonardita Super Black</h1>
-            <p class="product-detail-lede">Condicionador de solo natural, rico em ácidos húmicos e fúlvicos, que melhora a estrutura do solo e estimula o crescimento radicular.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Leonardita%20Super%20Black%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-solo)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Leonardita Super Black é um condicionador de solo 100% natural, também derivado da Leonardita, com alta concentração de matéria orgânica humificada.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para recuperar e melhorar a estrutura física do solo, favorecendo o crescimento radicular e estimulando a vida microbiana benéfica que sustenta a fertilidade a longo prazo.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Melhora a estrutura e a porosidade do solo</li>
-                <li>Estimula o crescimento radicular</li>
-                <li>Aumenta a retenção de umidade no solo</li>
-                <li>Favorece a atividade microbiana benéfica</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Origem 100% natural</li>
-                <li>Alta concentração de matéria orgânica humificada</li>
-                <li>Efeito residual prolongado no solo</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Leonardita Super Black, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Leonardita Super Black?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Leonardita%20Super%20Black%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-potencer-orange">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/potencer-orange.webp" alt="Potencer Orange">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-adjuvantes)">
-            <span class="product-tag">Adjuvante</span>
-            <h1>Potencer Orange</h1>
-            <p class="product-detail-lede">Óleo vegetal natural extraído da casca da laranja, usado como adjuvante agrícola para potencializar defensivos e fertilizantes.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Potencer%20Orange%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-adjuvantes)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Potencer Orange é um óleo vegetal natural, extraído da casca da laranja, formulado para uso como adjuvante em caldas de pulverização.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para potencializar a ação de defensivos e fertilizantes aplicados via pulverização foliar, melhorando a cobertura da calda sobre a folha e reduzindo perdas na aplicação.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Melhora a cobertura foliar da calda de pulverização</li>
-                <li>Reduz a tensão superficial das gotas</li>
-                <li>Potencializa a eficiência de defensivos e fertilizantes</li>
-                <li>Ajuda a reduzir a deriva durante a aplicação</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Origem vegetal (casca de laranja), biodegradável</li>
-                <li>Compatível com a maioria dos produtos fitossanitários</li>
-                <li>Alternativa de baixa toxicidade a adjuvantes minerais</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Potencer Orange, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Potencer Orange?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Potencer%20Orange%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-super-hidrogel">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/super-hidrogel.webp" alt="Super Hidrogel">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-hidrogel)">
-            <span class="product-tag">Condicionador · 10kg</span>
-            <h1>Super Hidrogel</h1>
-            <p class="product-detail-lede">Condicionador de solo Classe A capaz de reter e armazenar altíssimas proporções de água, reduzindo perdas causadas pela falta de chuva.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Super%20Hidrogel%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-hidrogel)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Super Hidrogel é um condicionador de solo em grânulos, Classe A, desenvolvido para reter grandes proporções de água diretamente próximo às raízes das plantas.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para armazenar água no solo e disponibilizá-la gradualmente às plantas, reduzindo o estresse hídrico em períodos de estiagem, falhas de irrigação ou plantio em condições de risco.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Retém água disponível para as plantas por mais tempo</li>
-                <li>Reduz perdas por falta de chuva ou irrigação irregular</li>
-                <li>Melhora a taxa de pegamento no plantio e transplantio</li>
-                <li>Reduz a frequência de irrigação necessária</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Classe A — alta capacidade de absorção de água</li>
-                <li>Embalagem de 10kg pensada para uso comercial</li>
-                <li>Efeito prolongado, com múltiplos ciclos de absorção e liberação</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Super Hidrogel, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Super Hidrogel?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Super%20Hidrogel%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-acelera-fosfito-de-cobre">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/acelera-fosfito-de-cobre.webp" alt="Acelera Fosfito de Cobre">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-protecao)">
-            <span class="product-tag">Proteção</span>
-            <h1>Acelera Fosfito de Cobre</h1>
-            <p class="product-detail-lede">Ativa o sistema de defesa natural da planta e melhora a absorção de nutrientes como boro, molibdênio, zinco e potássio.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Fosfito%20de%20Cobre%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-protecao)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Acelera Fosfito de Cobre é um fertilizante foliar que combina fosfito e cobre em uma única formulação, voltado para o fortalecimento da planta.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para ativar os mecanismos de defesa natural da planta e melhorar a absorção de micronutrientes importantes, como boro, molibdênio, zinco e potássio, complementando o manejo fitossanitário da lavoura.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Estimula as defesas naturais da planta</li>
-                <li>Melhora a absorção de micronutrientes</li>
-                <li>Fortalece o sistema imunológico vegetal</li>
-                <li>Complementa programas de manejo fitossanitário</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Combinação fosfito + cobre em uma única formulação</li>
-                <li>Alta compatibilidade em mistura de tanque</li>
-                <li>Ação rápida por absorção foliar</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Fosfito de Cobre, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Acelera Fosfito de Cobre?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Fosfito%20de%20Cobre%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-acelera-florada">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/acelera-florada.webp" alt="Acelera Florada">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-foliar)">
-            <span class="product-tag">Aplicação foliar</span>
-            <h1>Acelera Florada</h1>
-            <p class="product-detail-lede">Fertilizante completo que promove desenvolvimento mais saudável e produtivo, aumentando a quantidade e qualidade de flores e frutos.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Florada%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-foliar)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Acelera Florada é um fertilizante foliar completo, formulado especificamente para apoiar a planta na fase reprodutiva do ciclo produtivo.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para promover um desenvolvimento mais saudável e produtivo durante a floração e a frutificação, aumentando a quantidade e a qualidade das flores e dos frutos formados.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Estimula a floração e a frutificação</li>
-                <li>Reduz o abortamento de flores</li>
-                <li>Melhora a qualidade dos frutos formados</li>
-                <li>Contribui para maior uniformidade na produção</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Formulação específica para a fase reprodutiva</li>
-                <li>Aplicação via pulverização foliar</li>
-                <li>Compatível com outros produtos da linha foliar</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Florada, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Acelera Florada?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Florada%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-acelera-max-micro">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/acelera-max-micro.webp" alt="Acelera Max Micro">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-foliar)">
-            <span class="product-tag">Aplicação foliar</span>
-            <h1>Acelera Max Micro</h1>
-            <p class="product-detail-lede">Micronutrientes balanceados que as plantas necessitam em pequenas quantidades — essencial para o desenvolvimento vegetativo.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Max%20Micro%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-foliar)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Acelera Max Micro é um fertilizante foliar formulado com micronutrientes balanceados, essenciais para a planta mesmo em pequenas quantidades.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para corrigir deficiências ocultas de micronutrientes e apoiar o desenvolvimento vegetativo da cultura, complementando a adubação de base feita no solo.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Corrige deficiências ocultas de micronutrientes</li>
-                <li>Melhora o desenvolvimento vegetativo</li>
-                <li>Complementa a adubação de base</li>
-                <li>Absorção rápida via aplicação foliar</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Formulação balanceada com múltiplos micronutrientes</li>
-                <li>Alta concentração em pequenas doses</li>
-                <li>Fácil mistura em tanque com outros produtos</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Max Micro, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Acelera Max Micro?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Max%20Micro%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-acelera-cafe">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/acelera-cafe.webp" alt="Acelera Café">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-foliar)">
-            <span class="product-tag">Aplicação foliar</span>
-            <h1>Acelera Café</h1>
-            <p class="product-detail-lede">Fertilizante especial com complexo nutricional indispensável para a nutrição balanceada e o aumento de produtividade do cafeeiro.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Caf%C3%A9%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-foliar)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Acelera Café é um fertilizante foliar especial, desenvolvido especificamente para atender as necessidades nutricionais da cultura do café.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para fornecer um complexo nutricional balanceado ao cafeeiro, apoiando a planta nas fases críticas do ciclo e contribuindo para o aumento de produtividade.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Nutrição balanceada específica para o cafeeiro</li>
-                <li>Contribui para o aumento de produtividade</li>
-                <li>Melhora o enchimento de grãos</li>
-                <li>Apoia a planta nas fases críticas do ciclo do café</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Formulação desenvolvida especificamente para o café</li>
-                <li>Aplicação foliar de fácil absorção</li>
-                <li>Compatível com o manejo tradicional da lavoura cafeeira</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Café, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Acelera Café?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Caf%C3%A9%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-acelera-completo">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/acelera-completo.jpg" alt="Acelera Completo">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-foliar)">
-            <span class="product-tag">Aplicação foliar</span>
-            <h1>Acelera Completo</h1>
-            <p class="product-detail-lede">Fertilizante completo à base de NPK + micronutrientes + algas marinhas + aminoácidos, para aplicação foliar.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Completo%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-foliar)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Acelera Completo é um fertilizante foliar multifuncional, que reúne NPK, micronutrientes, algas marinhas e aminoácidos em uma única formulação.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve para oferecer uma nutrição foliar ampla e equilibrada em uma única aplicação, apoiando o desenvolvimento da planta em diferentes fases da cultura e reduzindo a necessidade de misturas complexas.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Nutrição completa em uma única aplicação</li>
-                <li>Combina macro e micronutrientes com bioestimulantes</li>
-                <li>Melhora o vigor e a resistência da planta</li>
-                <li>Praticidade no manejo, com menos produtos para aplicar</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Formulação multifuncional (NPK + micro + algas + aminoácidos)</li>
-                <li>Reduz a necessidade de misturas complexas em tanque</li>
-                <li>Uso versátil em diferentes culturas e fases</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Completo, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Acelera Completo?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Completo%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="page" data-page="produto-acelera-aminoalgas">
-    <section class="block">
-      <div class="container">
-        <a class="back-link" href="#produtos" data-route="produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>Linha de produtos</a>
-
-        <div class="product-detail-head reveal">
-          <div class="product-detail-shot">
-            <img src="images/produtos/acelera-aminoalgas.webp" alt="Acelera Aminoalgas">
-          </div>
-          <div class="product-detail-intro" style="--line-color:var(--line-foliar)">
-            <span class="product-tag">Aplicação foliar</span>
-            <h1>Acelera Aminoalgas</h1>
-            <p class="product-detail-lede">Fertilizante orgânico produzido a partir de algas marinhas, com 18 tipos de aminoácidos essenciais ao crescimento das plantas.</p>
-            <a class="btn btn-primary" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Aminoalgas%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
-          </div>
-        </div>
-
-        <div class="product-detail-body reveal" style="--line-color:var(--line-foliar)">
-          <article>
-            <h2><span class="num">1</span>O que é?</h2>
-            <p>O Acelera Aminoalgas é um fertilizante orgânico produzido a partir de algas marinhas, fonte natural de aminoácidos livres prontos para uso pela planta.</p>
-          </article>
-          <article>
-            <h2><span class="num">2</span>Para que serve?</h2>
-            <p>Serve como bioestimulante, fornecendo 18 tipos de aminoácidos essenciais ao crescimento das plantas e ajudando a cultura a se recuperar mais rápido de situações de estresse.</p>
-          </article>
-          <article>
-            <h2><span class="num">3</span>Benefícios</h2>
-            <ul>
-                <li>Estimula o crescimento e o desenvolvimento vegetal</li>
-                <li>Ajuda a planta a se recuperar de situações de estresse</li>
-                <li>Melhora a absorção de nutrientes</li>
-                <li>Contribui para o equilíbrio hormonal da planta</li>
-            </ul>
-          </article>
-          <article>
-            <h2><span class="num">4</span>Diferenciais</h2>
-            <ul>
-                <li>Origem 100% de algas marinhas</li>
-                <li>Rico em aminoácidos livres, prontos para uso pela planta</li>
-                <li>Ação bioestimulante complementar à adubação convencional</li>
-            </ul>
-          </article>
-          <article class="full">
-            <h2><span class="num">5</span>Garantias</h2>
-            <p>Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Aminoalgas, nossa equipe está à disposição para te orientar antes e depois da compra.</p>
-          </article>
-        </div>
-
-        <div class="product-detail-cta reveal">
-          <h3>Ficou com alguma dúvida sobre o Acelera Aminoalgas?</h3>
-          <a class="btn btn-white" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Acelera%20Aminoalgas%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" rel="noopener">Falar com um especialista</a>
         </div>
       </div>
     </section>
@@ -1873,13 +1030,7 @@
       </div>
       <div class="foot-col">
         <h5>Linhas</h5>
-        <ul>
-          <li><a href="#produtos" data-line="solo">Linha Solo</a></li>
-          <li><a href="#produtos" data-line="foliar">Linha Foliar</a></li>
-          <li><a href="#produtos" data-line="adjuvantes">Linha Adjuvantes</a></li>
-          <li><a href="#produtos" data-line="hidrogel">Super Hidrogel</a></li>
-          <li><a href="#produtos" data-line="protecao">Proteção e Controle</a></li>
-        </ul>
+        <ul id="footerLinesList"></ul>
       </div>
       <div class="foot-col">
         <h5>Contato</h5>
@@ -1897,15 +1048,585 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var FALLBACK_DATA = {
+  "lines": [
+    {
+      "slug": "solo",
+      "label": "Linha Solo",
+      "color": "#1a1a1a",
+      "sort_order": 1
+    },
+    {
+      "slug": "foliar",
+      "label": "Linha Foliar",
+      "color": "#0d6b0d",
+      "sort_order": 2
+    },
+    {
+      "slug": "adjuvantes",
+      "label": "Linha Adjuvantes",
+      "color": "#c96a08",
+      "sort_order": 3
+    },
+    {
+      "slug": "hidrogel",
+      "label": "Super Hidrogel",
+      "color": "#0b57c4",
+      "sort_order": 4
+    },
+    {
+      "slug": "protecao",
+      "label": "Proteção e Controle",
+      "color": "#7a2e97",
+      "sort_order": 5
+    }
+  ],
+  "products": [
+    {
+      "slug": "acelera-calcio-fertil",
+      "name": "Acelera Cálcio Fértil",
+      "short_name": "Cálcio Fértil",
+      "line": "solo",
+      "tag": "Aplicação solo",
+      "image_url": "images/produtos/acelera-calcio-fertil.webp",
+      "lede": "Fertilizante líquido à base de cálcio e magnésio, formulado para reposição direta no solo de forma prática e eficiente.",
+      "o_que_e": "O Acelera Cálcio Fértil é um fertilizante líquido que repõe cálcio e magnésio no solo, dois nutrientes essenciais que costumam ficar escassos em solos ácidos ou muito explorados. Por ser líquido, tem absorção mais rápida do que fontes sólidas tradicionais.",
+      "para_que_serve": "Serve para corrigir deficiências de cálcio e magnésio no solo, nutrientes fundamentais para a formação da parede celular das plantas e para o bom desenvolvimento radicular. É indicado tanto na preparação da área quanto ao longo do ciclo da cultura.",
+      "beneficios": [
+        "Fortalece a parede celular das plantas",
+        "Melhora a estrutura e a fertilidade do solo",
+        "Reduz problemas ligados à deficiência de cálcio",
+        "Absorção mais rápida do que fontes sólidas de cálcio"
+      ],
+      "diferenciais": [
+        "Formulação líquida de alta solubilidade",
+        "Compatível com outros insumos líquidos em mistura de tanque",
+        "Aplicação simples via pulverização ou fertirrigação"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Cálcio Fértil, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": true,
+      "active": true,
+      "sort_order": 1
+    },
+    {
+      "slug": "acelera-humics",
+      "name": "Acelera Humics",
+      "short_name": "Humics",
+      "line": "solo",
+      "tag": "Condicionador",
+      "image_url": "images/produtos/acelera-humics.webp",
+      "lede": "Fertilizante organo-mineral de alta qualidade, derivado da Leonardita Australiana, rico em ácidos húmicos e fúlvicos.",
+      "o_que_e": "O Acelera Humics é um fertilizante organo-mineral produzido a partir da Leonardita Australiana, uma matéria-prima natural rica em ácidos húmicos e fúlvicos — substâncias orgânicas que atuam diretamente na melhoria do solo.",
+      "para_que_serve": "Serve para melhorar a atividade biológica e a estrutura do solo, aumentando a eficiência dos fertilizantes aplicados junto e criando um ambiente mais favorável para o desenvolvimento das raízes.",
+      "beneficios": [
+        "Aumenta a capacidade de troca catiônica (CTC) do solo",
+        "Estimula o desenvolvimento do sistema radicular",
+        "Melhora a retenção de água e nutrientes no solo",
+        "Potencializa a absorção de adubações complementares"
+      ],
+      "diferenciais": [
+        "Matéria-prima de alta pureza (Leonardita Australiana)",
+        "Alta concentração de ácidos húmicos e fúlvicos",
+        "Compatível com programas de fertirrigação"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Humics, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": false,
+      "active": true,
+      "sort_order": 2
+    },
+    {
+      "slug": "leonardita-super-black",
+      "name": "Leonardita Super Black",
+      "short_name": "Leonardita Super Black",
+      "line": "solo",
+      "tag": "Condicionador",
+      "image_url": "images/produtos/leonardita-super-black.webp",
+      "lede": "Condicionador de solo natural, rico em ácidos húmicos e fúlvicos, que melhora a estrutura do solo e estimula o crescimento radicular.",
+      "o_que_e": "O Leonardita Super Black é um condicionador de solo 100% natural, também derivado da Leonardita, com alta concentração de matéria orgânica humificada.",
+      "para_que_serve": "Serve para recuperar e melhorar a estrutura física do solo, favorecendo o crescimento radicular e estimulando a vida microbiana benéfica que sustenta a fertilidade a longo prazo.",
+      "beneficios": [
+        "Melhora a estrutura e a porosidade do solo",
+        "Estimula o crescimento radicular",
+        "Aumenta a retenção de umidade no solo",
+        "Favorece a atividade microbiana benéfica"
+      ],
+      "diferenciais": [
+        "Origem 100% natural",
+        "Alta concentração de matéria orgânica humificada",
+        "Efeito residual prolongado no solo"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Leonardita Super Black, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": false,
+      "active": true,
+      "sort_order": 3
+    },
+    {
+      "slug": "potencer-orange",
+      "name": "Potencer Orange",
+      "short_name": "Potencer Orange",
+      "line": "adjuvantes",
+      "tag": "Adjuvante",
+      "image_url": "images/produtos/potencer-orange.webp",
+      "lede": "Óleo vegetal natural extraído da casca da laranja, usado como adjuvante agrícola para potencializar defensivos e fertilizantes.",
+      "o_que_e": "O Potencer Orange é um óleo vegetal natural, extraído da casca da laranja, formulado para uso como adjuvante em caldas de pulverização.",
+      "para_que_serve": "Serve para potencializar a ação de defensivos e fertilizantes aplicados via pulverização foliar, melhorando a cobertura da calda sobre a folha e reduzindo perdas na aplicação.",
+      "beneficios": [
+        "Melhora a cobertura foliar da calda de pulverização",
+        "Reduz a tensão superficial das gotas",
+        "Potencializa a eficiência de defensivos e fertilizantes",
+        "Ajuda a reduzir a deriva durante a aplicação"
+      ],
+      "diferenciais": [
+        "Origem vegetal (casca de laranja), biodegradável",
+        "Compatível com a maioria dos produtos fitossanitários",
+        "Alternativa de baixa toxicidade a adjuvantes minerais"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Potencer Orange, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": true,
+      "active": true,
+      "sort_order": 4
+    },
+    {
+      "slug": "super-hidrogel",
+      "name": "Super Hidrogel",
+      "short_name": "Super Hidrogel",
+      "line": "hidrogel",
+      "tag": "Condicionador · 10kg",
+      "image_url": "images/produtos/super-hidrogel.webp",
+      "lede": "Condicionador de solo Classe A capaz de reter e armazenar altíssimas proporções de água, reduzindo perdas causadas pela falta de chuva.",
+      "o_que_e": "O Super Hidrogel é um condicionador de solo em grânulos, Classe A, desenvolvido para reter grandes proporções de água diretamente próximo às raízes das plantas.",
+      "para_que_serve": "Serve para armazenar água no solo e disponibilizá-la gradualmente às plantas, reduzindo o estresse hídrico em períodos de estiagem, falhas de irrigação ou plantio em condições de risco.",
+      "beneficios": [
+        "Retém água disponível para as plantas por mais tempo",
+        "Reduz perdas por falta de chuva ou irrigação irregular",
+        "Melhora a taxa de pegamento no plantio e transplantio",
+        "Reduz a frequência de irrigação necessária"
+      ],
+      "diferenciais": [
+        "Classe A — alta capacidade de absorção de água",
+        "Embalagem de 10kg pensada para uso comercial",
+        "Efeito prolongado, com múltiplos ciclos de absorção e liberação"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Super Hidrogel, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": true,
+      "active": true,
+      "sort_order": 5
+    },
+    {
+      "slug": "acelera-fosfito-de-cobre",
+      "name": "Acelera Fosfito de Cobre",
+      "short_name": "Fosfito de Cobre",
+      "line": "protecao",
+      "tag": "Proteção",
+      "image_url": "images/produtos/acelera-fosfito-de-cobre.webp",
+      "lede": "Ativa o sistema de defesa natural da planta e melhora a absorção de nutrientes como boro, molibdênio, zinco e potássio.",
+      "o_que_e": "O Acelera Fosfito de Cobre é um fertilizante foliar que combina fosfito e cobre em uma única formulação, voltado para o fortalecimento da planta.",
+      "para_que_serve": "Serve para ativar os mecanismos de defesa natural da planta e melhorar a absorção de micronutrientes importantes, como boro, molibdênio, zinco e potássio, complementando o manejo fitossanitário da lavoura.",
+      "beneficios": [
+        "Estimula as defesas naturais da planta",
+        "Melhora a absorção de micronutrientes",
+        "Fortalece o sistema imunológico vegetal",
+        "Complementa programas de manejo fitossanitário"
+      ],
+      "diferenciais": [
+        "Combinação fosfito + cobre em uma única formulação",
+        "Alta compatibilidade em mistura de tanque",
+        "Ação rápida por absorção foliar"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Fosfito de Cobre, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": false,
+      "active": true,
+      "sort_order": 6
+    },
+    {
+      "slug": "acelera-florada",
+      "name": "Acelera Florada",
+      "short_name": "Florada",
+      "line": "foliar",
+      "tag": "Aplicação foliar",
+      "image_url": "images/produtos/acelera-florada.webp",
+      "lede": "Fertilizante completo que promove desenvolvimento mais saudável e produtivo, aumentando a quantidade e qualidade de flores e frutos.",
+      "o_que_e": "O Acelera Florada é um fertilizante foliar completo, formulado especificamente para apoiar a planta na fase reprodutiva do ciclo produtivo.",
+      "para_que_serve": "Serve para promover um desenvolvimento mais saudável e produtivo durante a floração e a frutificação, aumentando a quantidade e a qualidade das flores e dos frutos formados.",
+      "beneficios": [
+        "Estimula a floração e a frutificação",
+        "Reduz o abortamento de flores",
+        "Melhora a qualidade dos frutos formados",
+        "Contribui para maior uniformidade na produção"
+      ],
+      "diferenciais": [
+        "Formulação específica para a fase reprodutiva",
+        "Aplicação via pulverização foliar",
+        "Compatível com outros produtos da linha foliar"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Florada, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": true,
+      "active": true,
+      "sort_order": 7
+    },
+    {
+      "slug": "acelera-max-micro",
+      "name": "Acelera Max Micro",
+      "short_name": "Max Micro",
+      "line": "foliar",
+      "tag": "Aplicação foliar",
+      "image_url": "images/produtos/acelera-max-micro.webp",
+      "lede": "Micronutrientes balanceados que as plantas necessitam em pequenas quantidades — essencial para o desenvolvimento vegetativo.",
+      "o_que_e": "O Acelera Max Micro é um fertilizante foliar formulado com micronutrientes balanceados, essenciais para a planta mesmo em pequenas quantidades.",
+      "para_que_serve": "Serve para corrigir deficiências ocultas de micronutrientes e apoiar o desenvolvimento vegetativo da cultura, complementando a adubação de base feita no solo.",
+      "beneficios": [
+        "Corrige deficiências ocultas de micronutrientes",
+        "Melhora o desenvolvimento vegetativo",
+        "Complementa a adubação de base",
+        "Absorção rápida via aplicação foliar"
+      ],
+      "diferenciais": [
+        "Formulação balanceada com múltiplos micronutrientes",
+        "Alta concentração em pequenas doses",
+        "Fácil mistura em tanque com outros produtos"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Max Micro, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": false,
+      "active": true,
+      "sort_order": 8
+    },
+    {
+      "slug": "acelera-cafe",
+      "name": "Acelera Café",
+      "short_name": "Café",
+      "line": "foliar",
+      "tag": "Aplicação foliar",
+      "image_url": "images/produtos/acelera-cafe.webp",
+      "lede": "Fertilizante especial com complexo nutricional indispensável para a nutrição balanceada e o aumento de produtividade do cafeeiro.",
+      "o_que_e": "O Acelera Café é um fertilizante foliar especial, desenvolvido especificamente para atender as necessidades nutricionais da cultura do café.",
+      "para_que_serve": "Serve para fornecer um complexo nutricional balanceado ao cafeeiro, apoiando a planta nas fases críticas do ciclo e contribuindo para o aumento de produtividade.",
+      "beneficios": [
+        "Nutrição balanceada específica para o cafeeiro",
+        "Contribui para o aumento de produtividade",
+        "Melhora o enchimento de grãos",
+        "Apoia a planta nas fases críticas do ciclo do café"
+      ],
+      "diferenciais": [
+        "Formulação desenvolvida especificamente para o café",
+        "Aplicação foliar de fácil absorção",
+        "Compatível com o manejo tradicional da lavoura cafeeira"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Café, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": false,
+      "active": true,
+      "sort_order": 9
+    },
+    {
+      "slug": "acelera-completo",
+      "name": "Acelera Completo",
+      "short_name": "Completo",
+      "line": "foliar",
+      "tag": "Aplicação foliar",
+      "image_url": "images/produtos/acelera-completo.jpg",
+      "lede": "Fertilizante completo à base de NPK + micronutrientes + algas marinhas + aminoácidos, para aplicação foliar.",
+      "o_que_e": "O Acelera Completo é um fertilizante foliar multifuncional, que reúne NPK, micronutrientes, algas marinhas e aminoácidos em uma única formulação.",
+      "para_que_serve": "Serve para oferecer uma nutrição foliar ampla e equilibrada em uma única aplicação, apoiando o desenvolvimento da planta em diferentes fases da cultura e reduzindo a necessidade de misturas complexas.",
+      "beneficios": [
+        "Nutrição completa em uma única aplicação",
+        "Combina macro e micronutrientes com bioestimulantes",
+        "Melhora o vigor e a resistência da planta",
+        "Praticidade no manejo, com menos produtos para aplicar"
+      ],
+      "diferenciais": [
+        "Formulação multifuncional (NPK + micro + algas + aminoácidos)",
+        "Reduz a necessidade de misturas complexas em tanque",
+        "Uso versátil em diferentes culturas e fases"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Completo, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": false,
+      "active": true,
+      "sort_order": 10
+    },
+    {
+      "slug": "acelera-aminoalgas",
+      "name": "Acelera Aminoalgas",
+      "short_name": "Aminoalgas",
+      "line": "foliar",
+      "tag": "Aplicação foliar",
+      "image_url": "images/produtos/acelera-aminoalgas.webp",
+      "lede": "Fertilizante orgânico produzido a partir de algas marinhas, com 18 tipos de aminoácidos essenciais ao crescimento das plantas.",
+      "o_que_e": "O Acelera Aminoalgas é um fertilizante orgânico produzido a partir de algas marinhas, fonte natural de aminoácidos livres prontos para uso pela planta.",
+      "para_que_serve": "Serve como bioestimulante, fornecendo 18 tipos de aminoácidos essenciais ao crescimento das plantas e ajudando a cultura a se recuperar mais rápido de situações de estresse.",
+      "beneficios": [
+        "Estimula o crescimento e o desenvolvimento vegetal",
+        "Ajuda a planta a se recuperar de situações de estresse",
+        "Melhora a absorção de nutrientes",
+        "Contribui para o equilíbrio hormonal da planta"
+      ],
+      "diferenciais": [
+        "Origem 100% de algas marinhas",
+        "Rico em aminoácidos livres, prontos para uso pela planta",
+        "Ação bioestimulante complementar à adubação convencional"
+      ],
+      "garantias": "Produzido em unidade própria da Acelera, com controle de qualidade em todas as etapas de fabricação. Qualquer dúvida sobre lote, prazo de validade ou modo de uso do Acelera Aminoalgas, nossa equipe está à disposição para te orientar antes e depois da compra.",
+      "cta_text": "Falar com um especialista",
+      "whatsapp_number": "5517981236203",
+      "featured": false,
+      "active": true,
+      "sort_order": 11
+    }
+  ],
+  "content": {
+    "whatsapp_number": "5517981236203",
+    "hero_kicker": "Fertilizantes líquidos · Suporte agronômico",
+    "hero_title_html": "O campo <em>acelera</em><br />com a gente.",
+    "hero_lede": "Fabricamos e distribuímos fertilizantes e condicionadores de solo de alta performance para produtores de todo o Brasil, com acompanhamento técnico do plantio à colheita.",
+    "hero_cta_primary_label": "Ver linha de produtos",
+    "hero_cta_secondary_label": "Falar com um especialista",
+    "about_title": "Mais do que fertilizantes, oferecemos soluções para você produzir melhor.",
+    "catalog_section_title": "Um pouco da nossa linha de produtos",
+    "institutional_section_title": "Comprometidos com o produtor rural",
+    "products_page_title": "Cinco linhas, uma lavoura mais produtiva"
+  }
+};
+
+(function(){
+  "use strict";
+
+  var SUPABASE_URL = "https://kiuulfkrfvcagyuxwnbg.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpdXVsZmtyZnZjYWd5dXh3bmJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyOTcxODcsImV4cCI6MjEwMjg3MzE4N30.X6sim5F0f9K7oIAixs5-OJ5CQedfzlmh4ZBVbiG0_Po";
+
+  var sb = null;
+  try {
+    if (window.supabase && window.supabase.createClient) {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+  } catch (e) {}
+
+  window.SITE_DATA = FALLBACK_DATA;
+  window.__acelera = window.__acelera || {};
+
+  function esc(s){
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  function svgArrow(){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>';
+  }
+  function svgBack(){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>';
+  }
+
+  function lineBySlug(slug){
+    var lines = window.SITE_DATA.lines || [];
+    for (var i = 0; i < lines.length; i++) { if (lines[i].slug === slug) return lines[i]; }
+    return null;
+  }
+
+  function waLink(number, text){
+    return "https://wa.me/" + (number || "") + "?text=" + encodeURIComponent(text);
+  }
+
+  function renderProductCard(p){
+    var line = lineBySlug(p.line) || {};
+    var color = line.color || "#2a8c3b";
+    return '<article class="product-card reveal" data-line="' + esc(p.line) + '" style="--line-color:' + esc(color) + '">' +
+      '<div class="product-shot"><img src="' + esc(p.image_url) + '" alt="Frasco ' + esc(p.name) + '" loading="lazy" /></div>' +
+      '<div class="product-info"><div class="product-info-text"><h3>' + esc(p.short_name) + '</h3><span>' + esc(p.tag) + '</span></div>' +
+      '<a class="product-arrow" href="#produto-' + esc(p.slug) + '" data-route="produto-' + esc(p.slug) + '" aria-label="Ver produto: ' + esc(p.name) + '">' + svgArrow() + '</a>' +
+      '</div></article>';
+  }
+
+  function renderLineLink(line){
+    return '<a href="#produtos" data-line="' + esc(line.slug) + '">' + esc(line.label) + '</a>';
+  }
+
+  function renderProductDetailPage(p){
+    var line = lineBySlug(p.line) || {};
+    var color = line.color || "#2a8c3b";
+    var beneficios = (p.beneficios || []).map(function(b){ return "<li>" + esc(b) + "</li>"; }).join("");
+    var diferenciais = (p.diferenciais || []).map(function(d){ return "<li>" + esc(d) + "</li>"; }).join("");
+    var ctaText = p.cta_text || "Falar com um especialista";
+    var waNumber = p.whatsapp_number || (window.SITE_DATA.content && window.SITE_DATA.content.whatsapp_number) || "";
+    var waHref = waLink(waNumber, "Olá! Tenho interesse no " + p.name + " e gostaria de falar com um especialista.");
+
+    var section = document.createElement("section");
+    section.className = "page";
+    section.setAttribute("data-page", "produto-" + p.slug);
+    section.setAttribute("data-generated", "1");
+    section.innerHTML =
+      '<section class="block"><div class="container">' +
+      '<a class="back-link" href="#produtos" data-route="produtos">' + svgBack() + 'Linha de produtos</a>' +
+      '<div class="product-detail-head reveal">' +
+        '<div class="product-detail-shot"><img src="' + esc(p.image_url) + '" alt="' + esc(p.name) + '"></div>' +
+        '<div class="product-detail-intro" style="--line-color:' + esc(color) + '">' +
+          '<span class="product-tag">' + esc(p.tag) + '</span>' +
+          '<h1>' + esc(p.name) + '</h1>' +
+          '<p class="product-detail-lede">' + esc(p.lede) + '</p>' +
+          '<a class="btn btn-primary" href="' + waHref + '" target="_blank" rel="noopener">' + esc(ctaText) + '</a>' +
+        '</div>' +
+      '</div>' +
+      '<div class="product-detail-body reveal" style="--line-color:' + esc(color) + '">' +
+        '<article><h2><span class="num">1</span>O que é?</h2><p>' + esc(p.o_que_e) + '</p></article>' +
+        '<article><h2><span class="num">2</span>Para que serve?</h2><p>' + esc(p.para_que_serve) + '</p></article>' +
+        '<article><h2><span class="num">3</span>Benefícios</h2><ul>' + beneficios + '</ul></article>' +
+        '<article><h2><span class="num">4</span>Diferenciais</h2><ul>' + diferenciais + '</ul></article>' +
+        '<article class="full"><h2><span class="num">5</span>Garantias</h2><p>' + esc(p.garantias) + '</p></article>' +
+      '</div>' +
+      '<div class="product-detail-cta reveal">' +
+        '<h3>Ficou com alguma dúvida sobre o ' + esc(p.name) + '?</h3>' +
+        '<a class="btn btn-white" href="' + waHref + '" target="_blank" rel="noopener">' + esc(ctaText) + '</a>' +
+      '</div>' +
+      '</div></section>';
+    return section;
+  }
+
+  function applyContentOverrides(){
+    var content = (window.SITE_DATA && window.SITE_DATA.content) || {};
+    document.querySelectorAll("[data-content-key]").forEach(function(el){
+      var key = el.getAttribute("data-content-key");
+      if (!Object.prototype.hasOwnProperty.call(content, key)) return;
+      var value = content[key];
+      if (value == null) return;
+      if (el.getAttribute("data-content-html") === "1") {
+        el.innerHTML = String(value);
+      } else {
+        el.textContent = String(value);
+      }
+    });
+  }
+
+  function renderDynamic(){
+    var lines = (window.SITE_DATA.lines || []).slice().sort(function(a,b){ return (a.sort_order||0) - (b.sort_order||0); });
+    var products = (window.SITE_DATA.products || []).filter(function(p){ return p.active !== false; })
+      .slice().sort(function(a,b){ return (a.sort_order||0) - (b.sort_order||0); });
+
+    var lineTabsEl = document.getElementById("lineTabs");
+    if (lineTabsEl){
+      var tabsHtml = '<button class="line-tab" role="tab" aria-selected="true" data-line="all" style="--line-color:var(--ink)"><span class="swatch"></span>Todas as linhas</button>';
+      lines.forEach(function(line){
+        tabsHtml += '<button class="line-tab" role="tab" aria-selected="false" data-line="' + esc(line.slug) + '" style="--line-color:' + esc(line.color) + '"><span class="swatch"></span>' + esc(line.label) + '</button>';
+      });
+      lineTabsEl.innerHTML = tabsHtml;
+    }
+
+    var dropdownEl = document.getElementById("navDropdownLines");
+    if (dropdownEl){ dropdownEl.innerHTML = lines.map(renderLineLink).join(""); }
+
+    var mobileSubnavEl = document.getElementById("mobileSubnavLines");
+    if (mobileSubnavEl){
+      mobileSubnavEl.innerHTML = '<a href="#produtos" data-nav="produtos">Ver todos os produtos</a>' + lines.map(renderLineLink).join("");
+    }
+
+    var footerLinesEl = document.getElementById("footerLinesList");
+    if (footerLinesEl){
+      footerLinesEl.innerHTML = lines.map(function(l){ return "<li>" + renderLineLink(l) + "</li>"; }).join("");
+    }
+
+    var homeGridEl = document.getElementById("homeProductGrid");
+    if (homeGridEl){
+      var featuredList = products.filter(function(p){ return p.featured; });
+      if (featuredList.length === 0) { featuredList = products; }
+      homeGridEl.innerHTML = featuredList.slice(0, 4).map(renderProductCard).join("");
+    }
+
+    var gridEl = document.getElementById("productGrid");
+    if (gridEl){ gridEl.innerHTML = products.map(renderProductCard).join(""); }
+
+    document.querySelectorAll('.page[data-generated="1"]').forEach(function(el){ el.remove(); });
+    var mainEl = document.getElementById("main");
+    if (mainEl){
+      products.forEach(function(p){ mainEl.appendChild(renderProductDetailPage(p)); });
+    }
+
+    applyContentOverrides();
+
+    if (typeof window.__acelera.afterRender === "function") {
+      window.__acelera.afterRender();
+    }
+  }
+
+  window.__acelera.renderDynamic = renderDynamic;
+  window.__acelera.SUPABASE_URL = SUPABASE_URL;
+
+  renderDynamic();
+
+  async function loadFromSupabase(){
+    if (!sb) return;
+    try {
+      var results = await Promise.all([
+        sb.from("product_lines").select("slug,label,color,sort_order").order("sort_order"),
+        sb.from("products").select("slug,name,short_name,tag,image_url,lede,o_que_e,para_que_serve,beneficios,diferenciais,garantias,cta_text,whatsapp_number,featured,active,sort_order,product_lines(slug)").order("sort_order"),
+        sb.from("site_content").select("key,value")
+      ]);
+      var linesRes = results[0], productsRes = results[1], contentRes = results[2];
+      if (linesRes.error || productsRes.error || contentRes.error) { return; }
+      if (!linesRes.data || !productsRes.data || linesRes.data.length === 0 || productsRes.data.length === 0) { return; }
+
+      var lines = linesRes.data.map(function(l){
+        return { slug: l.slug, label: l.label, color: l.color, sort_order: l.sort_order };
+      });
+      var products = productsRes.data.map(function(p){
+        return {
+          slug: p.slug, name: p.name, short_name: p.short_name,
+          line: p.product_lines ? p.product_lines.slug : null,
+          tag: p.tag, image_url: p.image_url, lede: p.lede,
+          o_que_e: p.o_que_e, para_que_serve: p.para_que_serve,
+          beneficios: p.beneficios || [], diferenciais: p.diferenciais || [],
+          garantias: p.garantias, cta_text: p.cta_text, whatsapp_number: p.whatsapp_number,
+          featured: !!p.featured, active: p.active !== false, sort_order: p.sort_order
+        };
+      });
+      var content = {};
+      (contentRes.data || []).forEach(function(row){ content[row.key] = row.value; });
+
+      window.SITE_DATA = { lines: lines, products: products, content: content };
+      renderDynamic();
+      if (typeof window.__acelera.onDataRefresh === "function") {
+        window.__acelera.onDataRefresh();
+      }
+    } catch (e) {
+      // network unreachable or Supabase not configured yet — keep fallback content
+    }
+  }
+
+  loadFromSupabase();
+})();
+</script>
+
 <script>
 (function(){
   "use strict";
 
-  var pages = document.querySelectorAll(".page");
-  var VALID_PAGES = Array.prototype.map.call(pages, function(p){ return p.getAttribute("data-page"); });
-  var navLinks = document.querySelectorAll("nav.primary a[data-nav], .mobile-panel a[data-nav]");
+  var pages = [];
+  var VALID_PAGES = [];
+  var navLinks = [];
   var siteHeader = document.querySelector("header.site");
   var currentPage = "inicio";
+
+  function refreshPageRefs(){
+    pages = document.querySelectorAll(".page");
+    VALID_PAGES = Array.prototype.map.call(pages, function(p){ return p.getAttribute("data-page"); });
+    navLinks = document.querySelectorAll("nav.primary a[data-nav], .mobile-panel a[data-nav]");
+  }
 
   function currentPageFromHash(){
     var h = (location.hash || "#inicio").replace("#","");
@@ -1945,6 +1666,7 @@
     updateHeaderState();
   }
 
+  refreshPageRefs();
   window.addEventListener("hashchange", function(){ showPage(currentPageFromHash()); });
   showPage(currentPageFromHash(), { silent:true });
   window.addEventListener("scroll", updateHeaderState, { passive:true });
@@ -1974,24 +1696,32 @@
   }
 
   // ---- product line filter ----
-  var lineTabs = document.querySelectorAll(".line-tab");
-  var gridItems = document.querySelectorAll("#productGrid > [data-line]");
   function filterLine(line){
-    lineTabs.forEach(function(t){ t.setAttribute("aria-selected", t.getAttribute("data-line") === line ? "true" : "false"); });
-    gridItems.forEach(function(item){
+    document.querySelectorAll(".line-tab").forEach(function(t){ t.setAttribute("aria-selected", t.getAttribute("data-line") === line ? "true" : "false"); });
+    document.querySelectorAll("#productGrid > [data-line]").forEach(function(item){
       var show = line === "all" || item.getAttribute("data-line") === line;
       item.style.display = show ? "" : "none";
     });
   }
-  lineTabs.forEach(function(tab){
-    tab.addEventListener("click", function(){ filterLine(tab.getAttribute("data-line")); });
-  });
-  document.querySelectorAll("a[data-line]").forEach(function(a){
-    a.addEventListener("click", function(){
-      var line = a.getAttribute("data-line");
-      setTimeout(function(){ filterLine(line); }, 0);
+  function wireLineFilter(){
+    document.querySelectorAll(".line-tab").forEach(function(tab){
+      tab.addEventListener("click", function(){ filterLine(tab.getAttribute("data-line")); });
     });
-  });
+    document.querySelectorAll("a[data-line]").forEach(function(a){
+      a.addEventListener("click", function(){
+        var line = a.getAttribute("data-line");
+        setTimeout(function(){ filterLine(line); }, 0);
+      });
+    });
+  }
+  wireLineFilter();
+
+  window.__acelera = window.__acelera || {};
+  window.__acelera.onDataRefresh = function(){
+    refreshPageRefs();
+    wireLineFilter();
+    showPage(currentPageFromHash(), { silent:true });
+  };
 
   // ---- trabalhe conosco demo form ----
   var workForm = document.getElementById("workForm");

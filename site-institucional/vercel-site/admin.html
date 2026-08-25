@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Painel Admin · Acelera Fertilizantes</title>
+<style>
+  :root{
+    --brand-green-deep:#035927; --brand-gold:#C49855; --brand-green:#2a8c3b;
+    --bg:#F6F7F5; --surface:#FFFFFF; --ink:#171B18; --ink-soft:#4B534D; --ink-faint:#7C857E;
+    --line:#E3E6E1; --danger:#B3261E; --radius:12px;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); }
+  header{ background:var(--brand-green-deep); color:#fff; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; }
+  header h1{ font-size:1.05rem; margin:0; font-weight:700; }
+  header .who{ font-size:.85rem; color:rgba(255,255,255,.75); }
+  header button{ background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); color:#fff; padding:8px 14px; border-radius:8px; cursor:pointer; font-size:.85rem; }
+  header button:hover{ background:rgba(255,255,255,.2); }
+  .wrap{ max-width:1100px; margin:0 auto; padding:28px 20px 80px; }
+  .login-wrap{ max-width:380px; margin:80px auto; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:32px; }
+  .login-wrap h2{ margin:0 0 6px; font-size:1.3rem; }
+  .login-wrap p{ margin:0 0 22px; color:var(--ink-faint); font-size:.9rem; }
+  label{ display:block; font-size:.82rem; font-weight:600; color:var(--ink-soft); margin-bottom:5px; }
+  input[type=text], input[type=email], input[type=password], input[type=number], input[type=color], textarea, select{
+    width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-size:.92rem; font-family:inherit;
+    background:#fff; color:var(--ink); margin-bottom:16px;
+  }
+  input[type=color]{ padding:4px; height:42px; }
+  textarea{ resize:vertical; min-height:70px; }
+  .btn{ display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border-radius:8px; border:none; cursor:pointer; font-size:.9rem; font-weight:600; }
+  .btn-primary{ background:var(--brand-green-deep); color:#fff; }
+  .btn-primary:hover{ background:#02431d; }
+  .btn-outline{ background:#fff; border:1px solid var(--line); color:var(--ink); }
+  .btn-outline:hover{ border-color:var(--ink-soft); }
+  .btn-danger{ background:#fff; border:1px solid var(--danger); color:var(--danger); }
+  .btn-danger:hover{ background:#fdf1f0; }
+  .btn-sm{ padding:6px 12px; font-size:.8rem; }
+  .error-msg{ background:#fdf1f0; border:1px solid #f3c6c2; color:var(--danger); padding:10px 14px; border-radius:8px; font-size:.85rem; margin-bottom:16px; }
+  .ok-msg{ background:#eef7ee; border:1px solid #bfe0c0; color:var(--brand-green-deep); padding:10px 14px; border-radius:8px; font-size:.85rem; margin-bottom:16px; }
+  .tabs{ display:flex; gap:6px; margin-bottom:24px; border-bottom:1px solid var(--line); }
+  .tab-btn{ background:none; border:none; padding:12px 18px; font-size:.92rem; font-weight:600; color:var(--ink-faint); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab-btn.active{ color:var(--brand-green-deep); border-bottom-color:var(--brand-green-deep); }
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+  .panel-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+  .panel-head h2{ margin:0; font-size:1.15rem; }
+  table{ width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  th, td{ text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); font-size:.87rem; vertical-align:middle; }
+  th{ background:#F0F2EF; font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); }
+  tr:last-child td{ border-bottom:none; }
+  td.actions{ white-space:nowrap; text-align:right; }
+  .swatch{ display:inline-block; width:14px; height:14px; border-radius:50%; vertical-align:middle; margin-right:6px; border:1px solid rgba(0,0,0,.15); }
+  .thumb{ width:36px; height:36px; object-fit:contain; background:#fff; border:1px solid var(--line); border-radius:6px; }
+  .modal-overlay{ display:none; position:fixed; inset:0; background:rgba(10,15,10,.5); align-items:flex-start; justify-content:center; padding:40px 16px; overflow-y:auto; z-index:50; }
+  .modal-overlay.open{ display:flex; }
+  .modal{ background:#fff; border-radius:var(--radius); max-width:640px; width:100%; padding:26px 28px; }
+  .modal h3{ margin:0 0 18px; font-size:1.1rem; }
+  .modal-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:8px; }
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+  .field-hint{ font-size:.76rem; color:var(--ink-faint); margin:-12px 0 16px; }
+  .content-row{ display:flex; gap:10px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:10px; }
+  .content-row .key{ width:220px; flex:none; font-size:.82rem; font-weight:700; color:var(--ink-soft); padding-top:10px; word-break:break-word; }
+  .content-row .val{ flex:1; }
+  .content-row textarea{ margin-bottom:0; }
+  .img-preview-row{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .img-preview-row img{ width:64px; height:64px; object-fit:contain; background:#fff; border:1px solid var(--line); border-radius:8px; }
+  .muted{ color:var(--ink-faint); font-size:.82rem; }
+  .checkbox-row{ display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+  .checkbox-row input{ width:auto; margin:0; }
+  .checkbox-row label{ margin:0; }
+  .spinner{ display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,.4); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-wrap">
+  <h2>Painel Admin</h2>
+  <p>Acelera Fertilizantes — entre com sua conta para editar o site.</p>
+  <div id="loginError"></div>
+  <form id="loginForm">
+    <label for="loginEmail">E-mail</label>
+    <input type="email" id="loginEmail" required autocomplete="username" />
+    <label for="loginPassword">Senha</label>
+    <input type="password" id="loginPassword" required autocomplete="current-password" />
+    <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Entrar</button>
+  </form>
+</div>
+
+<div id="appScreen" style="display:none;">
+  <header>
+    <h1>Painel Admin · Acelera Fertilizantes</h1>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span class="who" id="whoAmI"></span>
+      <button id="logoutBtn">Sair</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="produtos">Produtos</button>
+      <button class="tab-btn" data-tab="linhas">Linhas</button>
+      <button class="tab-btn" data-tab="conteudo">Textos do site</button>
+    </div>
+
+    <div id="globalMsg"></div>
+
+    <!-- PRODUTOS -->
+    <section class="panel active" id="panel-produtos">
+      <div class="panel-head">
+        <h2>Produtos</h2>
+        <button class="btn btn-primary" id="newProductBtn">+ Novo produto</button>
+      </div>
+      <table>
+        <thead><tr><th></th><th>Nome</th><th>Linha</th><th>Destaque</th><th>Ativo</th><th>Ordem</th><th></th></tr></thead>
+        <tbody id="productsTbody"></tbody>
+      </table>
+    </section>
+
+    <!-- LINHAS -->
+    <section class="panel" id="panel-linhas">
+      <div class="panel-head">
+        <h2>Linhas de produto</h2>
+        <button class="btn btn-primary" id="newLineBtn">+ Nova linha</button>
+      </div>
+      <table>
+        <thead><tr><th></th><th>Nome</th><th>Slug</th><th>Ordem</th><th></th></tr></thead>
+        <tbody id="linesTbody"></tbody>
+      </table>
+    </section>
+
+    <!-- CONTEUDO -->
+    <section class="panel" id="panel-conteudo">
+      <div class="panel-head">
+        <h2>Textos do site</h2>
+      </div>
+      <p class="muted" style="margin-top:-8px;">Chaves usadas hoje no site: hero_kicker, hero_title_html, hero_lede, hero_cta_primary_label, hero_cta_secondary_label, about_title, catalog_section_title, institutional_section_title, products_page_title, whatsapp_number. Você pode adicionar novas chaves, mas elas só aparecem no site se um elemento tiver o atributo <code>data-content-key</code> correspondente.</p>
+      <div id="contentList"></div>
+      <div class="modal" style="max-width:520px; padding:18px 20px; margin-top:10px;">
+        <h3 style="font-size:.95rem;">Adicionar novo texto</h3>
+        <label for="newContentKey">Chave</label>
+        <input type="text" id="newContentKey" placeholder="ex: footer_instagram_url" />
+        <label for="newContentValue">Valor</label>
+        <textarea id="newContentValue"></textarea>
+        <button class="btn btn-primary btn-sm" id="addContentBtn">Adicionar</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModalOverlay">
+  <div class="modal">
+    <h3 id="productModalTitle">Novo produto</h3>
+    <div id="productModalError"></div>
+    <form id="productForm">
+      <input type="hidden" id="p_id" />
+      <div class="grid-2">
+        <div><label for="p_name">Nome completo</label><input type="text" id="p_name" required placeholder="Acelera Florada" /></div>
+        <div><label for="p_short_name">Nome curto (no card)</label><input type="text" id="p_short_name" required placeholder="Florada" /></div>
+      </div>
+      <label for="p_slug">Slug (usado na URL, sem espaços)</label>
+      <input type="text" id="p_slug" required placeholder="acelera-florada" />
+      <div class="grid-2">
+        <div>
+          <label for="p_line">Linha</label>
+          <select id="p_line" required></select>
+        </div>
+        <div><label for="p_tag">Categoria (texto abaixo do nome)</label><input type="text" id="p_tag" placeholder="Aplicação foliar" /></div>
+      </div>
+
+      <label>Foto do produto</label>
+      <div class="img-preview-row">
+        <img id="p_image_preview" src="" alt="" style="display:none;" />
+        <input type="file" id="p_image_file" accept="image/*" />
+      </div>
+      <input type="hidden" id="p_image_url" />
+
+      <label for="p_lede">Resumo curto (aparece no topo da página do produto)</label>
+      <textarea id="p_lede"></textarea>
+
+      <label for="p_o_que_e">O que é?</label>
+      <textarea id="p_o_que_e"></textarea>
+
+      <label for="p_para_que_serve">Para que serve?</label>
+      <textarea id="p_para_que_serve"></textarea>
+
+      <label for="p_beneficios">Benefícios (um por linha)</label>
+      <textarea id="p_beneficios"></textarea>
+
+      <label for="p_diferenciais">Diferenciais (um por linha)</label>
+      <textarea id="p_diferenciais"></textarea>
+
+      <label for="p_garantias">Garantias</label>
+      <textarea id="p_garantias"></textarea>
+
+      <div class="grid-2">
+        <div><label for="p_cta_text">Texto do botão de contato</label><input type="text" id="p_cta_text" placeholder="Falar com um especialista" /></div>
+        <div><label for="p_whatsapp">WhatsApp (só números, com DDI+DDD)</label><input type="text" id="p_whatsapp" placeholder="5517981236203" /></div>
+      </div>
+
+      <div class="grid-2">
+        <div><label for="p_sort_order">Ordem</label><input type="number" id="p_sort_order" value="0" /></div>
+        <div>
+          <div class="checkbox-row" style="margin-top:30px;"><input type="checkbox" id="p_featured" /><label for="p_featured">Destaque na home</label></div>
+        </div>
+      </div>
+      <div class="checkbox-row"><input type="checkbox" id="p_active" checked /><label for="p_active">Ativo (visível no site)</label></div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="productCancelBtn">Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="productSaveBtn">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- LINE MODAL -->
+<div class="modal-overlay" id="lineModalOverlay">
+  <div class="modal" style="max-width:420px;">
+    <h3 id="lineModalTitle">Nova linha</h3>
+    <div id="lineModalError"></div>
+    <form id="lineForm">
+      <input type="hidden" id="l_id" />
+      <label for="l_label">Nome</label>
+      <input type="text" id="l_label" required placeholder="Linha Foliar" />
+      <label for="l_slug">Slug (usado internamente)</label>
+      <input type="text" id="l_slug" required placeholder="foliar" />
+      <label for="l_color">Cor</label>
+      <input type="color" id="l_color" value="#2a8c3b" />
+      <label for="l_sort_order">Ordem</label>
+      <input type="number" id="l_sort_order" value="0" />
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="lineCancelBtn">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var SUPABASE_URL = "https://kiuulfkrfvcagyuxwnbg.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpdXVsZmtyZnZjYWd5dXh3bmJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyOTcxODcsImV4cCI6MjEwMjg3MzE4N30.X6sim5F0f9K7oIAixs5-OJ5CQedfzlmh4ZBVbiG0_Po";
+  var sb = null;
+  try {
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (e) {
+    document.getElementById("loginError").innerHTML =
+      '<div class="error-msg">Não foi possível carregar a conexão com o servidor. Verifique sua internet e recarregue a página.</div>';
+    document.getElementById("loginForm").style.display = "none";
+    return;
+  }
+
+  var state = { lines: [], products: [], content: [] };
+
+  function $(id){ return document.getElementById(id); }
+  function esc(s){
+    return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function showMsg(el, text, kind){
+    el.innerHTML = text ? '<div class="' + (kind === "error" ? "error-msg" : "ok-msg") + '">' + esc(text) + '</div>' : "";
+  }
+
+  // ---------- AUTH ----------
+  async function checkSession(){
+    var res = await sb.auth.getSession();
+    if (res.data && res.data.session) {
+      showApp(res.data.session);
+    } else {
+      showLogin();
+    }
+  }
+
+  function showLogin(){
+    $("loginScreen").style.display = "block";
+    $("appScreen").style.display = "none";
+  }
+
+  function showApp(session){
+    $("loginScreen").style.display = "none";
+    $("appScreen").style.display = "block";
+    $("whoAmI").textContent = session.user.email;
+    loadAll();
+  }
+
+  $("loginForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    showMsg($("loginError"), "");
+    var email = $("loginEmail").value.trim();
+    var password = $("loginPassword").value;
+    var res = await sb.auth.signInWithPassword({ email: email, password: password });
+    if (res.error) {
+      showMsg($("loginError"), "Não foi possível entrar: " + res.error.message, "error");
+      return;
+    }
+    showApp(res.data.session);
+  });
+
+  $("logoutBtn").addEventListener("click", async function(){
+    await sb.auth.signOut();
+    showLogin();
+  });
+
+  // ---------- TABS ----------
+  document.querySelectorAll(".tab-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
+      document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
+      btn.classList.add("active");
+      $("panel-" + btn.getAttribute("data-tab")).classList.add("active");
+    });
+  });
+
+  // ---------- LOAD DATA ----------
+  async function loadAll(){
+    await Promise.all([loadLines(), loadProducts(), loadContent()]);
+  }
+
+  async function loadLines(){
+    var res = await sb.from("product_lines").select("*").order("sort_order");
+    if (res.error) { showMsg($("globalMsg"), "Erro ao carregar linhas: " + res.error.message, "error"); return; }
+    state.lines = res.data || [];
+    renderLinesTable();
+    renderLineSelect();
+  }
+
+  async function loadProducts(){
+    var res = await sb.from("products").select("*, product_lines(id,slug,label,color)").order("sort_order");
+    if (res.error) { showMsg($("globalMsg"), "Erro ao carregar produtos: " + res.error.message, "error"); return; }
+    state.products = res.data || [];
+    renderProductsTable();
+  }
+
+  async function loadContent(){
+    var res = await sb.from("site_content").select("*").order("key");
+    if (res.error) { showMsg($("globalMsg"), "Erro ao carregar textos: " + res.error.message, "error"); return; }
+    state.content = res.data || [];
+    renderContentList();
+  }
+
+  // ---------- RENDER: PRODUCTS ----------
+  function renderProductsTable(){
+    var tbody = $("productsTbody");
+    tbody.innerHTML = state.products.map(function(p){
+      var line = p.product_lines;
+      return '<tr>' +
+        '<td><img class="thumb" src="' + esc(p.image_url || "") + '" alt="" onerror="this.style.visibility=\'hidden\'" /></td>' +
+        '<td><strong>' + esc(p.name) + '</strong><br><span class="muted">' + esc(p.slug) + '</span></td>' +
+        '<td>' + (line ? '<span class="swatch" style="background:' + esc(line.color) + '"></span>' + esc(line.label) : '<span class="muted">—</span>') + '</td>' +
+        '<td>' + (p.featured ? "Sim" : "—") + '</td>' +
+        '<td>' + (p.active === false ? '<span class="muted">Inativo</span>' : "Sim") + '</td>' +
+        '<td>' + esc(p.sort_order) + '</td>' +
+        '<td class="actions">' +
+          '<button class="btn btn-outline btn-sm" data-edit-product="' + esc(p.id) + '">Editar</button> ' +
+          '<button class="btn btn-danger btn-sm" data-delete-product="' + esc(p.id) + '">Excluir</button>' +
+        '</td>' +
+      '</tr>';
+    }).join("") || '<tr><td colspan="7" class="muted" style="text-align:center; padding:26px;">Nenhum produto cadastrado ainda.</td></tr>';
+
+    tbody.querySelectorAll("[data-edit-product]").forEach(function(btn){
+      btn.addEventListener("click", function(){ openProductModal(btn.getAttribute("data-edit-product")); });
+    });
+    tbody.querySelectorAll("[data-delete-product]").forEach(function(btn){
+      btn.addEventListener("click", function(){ deleteProduct(btn.getAttribute("data-delete-product")); });
+    });
+  }
+
+  function renderLineSelect(){
+    var sel = $("p_line");
+    sel.innerHTML = state.lines.map(function(l){
+      return '<option value="' + esc(l.id) + '">' + esc(l.label) + '</option>';
+    }).join("");
+  }
+
+  // ---------- PRODUCT MODAL ----------
+  var productOverlay = $("productModalOverlay");
+  var currentProductImageFile = null;
+
+  $("newProductBtn").addEventListener("click", function(){ openProductModal(null); });
+  $("productCancelBtn").addEventListener("click", closeProductModal);
+
+  function openProductModal(id){
+    currentProductImageFile = null;
+    showMsg($("productModalError"), "");
+    var p = id ? state.products.find(function(x){ return x.id === id; }) : null;
+    $("productModalTitle").textContent = p ? "Editar produto" : "Novo produto";
+    $("p_id").value = p ? p.id : "";
+    $("p_name").value = p ? p.name : "";
+    $("p_short_name").value = p ? p.short_name : "";
+    $("p_slug").value = p ? p.slug : "";
+    $("p_line").value = p && p.line_id ? p.line_id : (state.lines[0] ? state.lines[0].id : "");
+    $("p_tag").value = p ? p.tag : "";
+    $("p_image_url").value = p ? (p.image_url || "") : "";
+    if (p && p.image_url) { $("p_image_preview").src = p.image_url; $("p_image_preview").style.display = "block"; }
+    else { $("p_image_preview").style.display = "none"; }
+    $("p_image_file").value = "";
+    $("p_lede").value = p ? p.lede : "";
+    $("p_o_que_e").value = p ? p.o_que_e : "";
+    $("p_para_que_serve").value = p ? p.para_que_serve : "";
+    $("p_beneficios").value = p && p.beneficios ? p.beneficios.join("\n") : "";
+    $("p_diferenciais").value = p && p.diferenciais ? p.diferenciais.join("\n") : "";
+    $("p_garantias").value = p ? p.garantias : "";
+    $("p_cta_text").value = p ? (p.cta_text || "Falar com um especialista") : "Falar com um especialista";
+    $("p_whatsapp").value = p ? (p.whatsapp_number || "") : "";
+    $("p_sort_order").value = p ? p.sort_order : (state.products.length + 1) * 10;
+    $("p_featured").checked = p ? !!p.featured : false;
+    $("p_active").checked = p ? p.active !== false : true;
+    productOverlay.classList.add("open");
+  }
+
+  function closeProductModal(){ productOverlay.classList.remove("open"); }
+
+  $("p_image_file").addEventListener("change", function(){
+    var file = this.files && this.files[0];
+    if (!file) return;
+    currentProductImageFile = file;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      $("p_image_preview").src = e.target.result;
+      $("p_image_preview").style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  });
+
+  async function uploadProductImage(file, slug){
+    var ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    var path = slug + "-" + Date.now() + "." + ext;
+    var up = await sb.storage.from("product-images").upload(path, file, { upsert: true });
+    if (up.error) throw up.error;
+    var pub = sb.storage.from("product-images").getPublicUrl(path);
+    return pub.data.publicUrl;
+  }
+
+  $("productForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    showMsg($("productModalError"), "");
+    var saveBtn = $("productSaveBtn");
+    saveBtn.disabled = true;
+    try {
+      var id = $("p_id").value || null;
+      var slug = $("p_slug").value.trim();
+      var imageUrl = $("p_image_url").value;
+      if (currentProductImageFile) {
+        imageUrl = await uploadProductImage(currentProductImageFile, slug || "produto");
+      }
+      var payload = {
+        slug: slug,
+        name: $("p_name").value.trim(),
+        short_name: $("p_short_name").value.trim(),
+        line_id: $("p_line").value,
+        tag: $("p_tag").value.trim(),
+        image_url: imageUrl,
+        lede: $("p_lede").value.trim(),
+        o_que_e: $("p_o_que_e").value.trim(),
+        para_que_serve: $("p_para_que_serve").value.trim(),
+        beneficios: $("p_beneficios").value.split("\n").map(function(s){ return s.trim(); }).filter(Boolean),
+        diferenciais: $("p_diferenciais").value.split("\n").map(function(s){ return s.trim(); }).filter(Boolean),
+        garantias: $("p_garantias").value.trim(),
+        cta_text: $("p_cta_text").value.trim() || "Falar com um especialista",
+        whatsapp_number: $("p_whatsapp").value.trim(),
+        sort_order: parseInt($("p_sort_order").value, 10) || 0,
+        featured: $("p_featured").checked,
+        active: $("p_active").checked
+      };
+      var res;
+      if (id) { res = await sb.from("products").update(payload).eq("id", id); }
+      else { res = await sb.from("products").insert(payload); }
+      if (res.error) throw res.error;
+      closeProductModal();
+      await loadProducts();
+      showMsg($("globalMsg"), "Produto salvo com sucesso.", "ok");
+    } catch (err) {
+      showMsg($("productModalError"), "Erro ao salvar: " + (err.message || err), "error");
+    } finally {
+      saveBtn.disabled = false;
+    }
+  });
+
+  async function deleteProduct(id){
+    if (!confirm("Excluir este produto? Essa ação não pode ser desfeita.")) return;
+    var res = await sb.from("products").delete().eq("id", id);
+    if (res.error) { showMsg($("globalMsg"), "Erro ao excluir: " + res.error.message, "error"); return; }
+    await loadProducts();
+    showMsg($("globalMsg"), "Produto excluído.", "ok");
+  }
+
+  // ---------- RENDER: LINES ----------
+  function renderLinesTable(){
+    var tbody = $("linesTbody");
+    tbody.innerHTML = state.lines.map(function(l){
+      return '<tr>' +
+        '<td><span class="swatch" style="background:' + esc(l.color) + '"></span></td>' +
+        '<td>' + esc(l.label) + '</td>' +
+        '<td class="muted">' + esc(l.slug) + '</td>' +
+        '<td>' + esc(l.sort_order) + '</td>' +
+        '<td class="actions">' +
+          '<button class="btn btn-outline btn-sm" data-edit-line="' + esc(l.id) + '">Editar</button> ' +
+          '<button class="btn btn-danger btn-sm" data-delete-line="' + esc(l.id) + '">Excluir</button>' +
+        '</td>' +
+      '</tr>';
+    }).join("") || '<tr><td colspan="5" class="muted" style="text-align:center; padding:26px;">Nenhuma linha cadastrada.</td></tr>';
+
+    tbody.querySelectorAll("[data-edit-line]").forEach(function(btn){
+      btn.addEventListener("click", function(){ openLineModal(btn.getAttribute("data-edit-line")); });
+    });
+    tbody.querySelectorAll("[data-delete-line]").forEach(function(btn){
+      btn.addEventListener("click", function(){ deleteLine(btn.getAttribute("data-delete-line")); });
+    });
+  }
+
+  var lineOverlay = $("lineModalOverlay");
+  $("newLineBtn").addEventListener("click", function(){ openLineModal(null); });
+  $("lineCancelBtn").addEventListener("click", function(){ lineOverlay.classList.remove("open"); });
+
+  function openLineModal(id){
+    showMsg($("lineModalError"), "");
+    var l = id ? state.lines.find(function(x){ return x.id === id; }) : null;
+    $("lineModalTitle").textContent = l ? "Editar linha" : "Nova linha";
+    $("l_id").value = l ? l.id : "";
+    $("l_label").value = l ? l.label : "";
+    $("l_slug").value = l ? l.slug : "";
+    $("l_color").value = l ? l.color : "#2a8c3b";
+    $("l_sort_order").value = l ? l.sort_order : (state.lines.length + 1) * 10;
+    lineOverlay.classList.add("open");
+  }
+
+  $("lineForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    showMsg($("lineModalError"), "");
+    var id = $("l_id").value || null;
+    var payload = {
+      label: $("l_label").value.trim(),
+      slug: $("l_slug").value.trim(),
+      color: $("l_color").value,
+      sort_order: parseInt($("l_sort_order").value, 10) || 0
+    };
+    var res;
+    if (id) { res = await sb.from("product_lines").update(payload).eq("id", id); }
+    else { res = await sb.from("product_lines").insert(payload); }
+    if (res.error) { showMsg($("lineModalError"), "Erro ao salvar: " + res.error.message, "error"); return; }
+    lineOverlay.classList.remove("open");
+    await loadLines();
+    showMsg($("globalMsg"), "Linha salva com sucesso.", "ok");
+  });
+
+  async function deleteLine(id){
+    if (!confirm("Excluir esta linha? Produtos associados a ela ficarão sem linha definida.")) return;
+    var res = await sb.from("product_lines").delete().eq("id", id);
+    if (res.error) { showMsg($("globalMsg"), "Erro ao excluir: " + res.error.message, "error"); return; }
+    await loadLines();
+    await loadProducts();
+    showMsg($("globalMsg"), "Linha excluída.", "ok");
+  }
+
+  // ---------- RENDER: CONTENT ----------
+  function renderContentList(){
+    var list = $("contentList");
+    list.innerHTML = state.content.map(function(row){
+      var val = typeof row.value === "string" ? row.value : JSON.stringify(row.value);
+      return '<div class="content-row" data-key="' + esc(row.key) + '">' +
+        '<div class="key">' + esc(row.key) + '</div>' +
+        '<div class="val">' +
+          '<textarea data-content-value>' + esc(val) + '</textarea>' +
+          '<div style="margin-top:8px; display:flex; gap:8px;">' +
+            '<button class="btn btn-primary btn-sm" data-save-content>Salvar</button>' +
+            '<button class="btn btn-danger btn-sm" data-delete-content>Excluir</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+
+    list.querySelectorAll("[data-save-content]").forEach(function(btn){
+      btn.addEventListener("click", async function(){
+        var row = btn.closest(".content-row");
+        var key = row.getAttribute("data-key");
+        var val = row.querySelector("[data-content-value]").value;
+        var res = await sb.from("site_content").update({ value: val }).eq("key", key);
+        if (res.error) { showMsg($("globalMsg"), "Erro ao salvar: " + res.error.message, "error"); return; }
+        showMsg($("globalMsg"), "Texto \"" + key + "\" atualizado.", "ok");
+      });
+    });
+    list.querySelectorAll("[data-delete-content]").forEach(function(btn){
+      btn.addEventListener("click", async function(){
+        var row = btn.closest(".content-row");
+        var key = row.getAttribute("data-key");
+        if (!confirm('Excluir a chave "' + key + '"?')) return;
+        var res = await sb.from("site_content").delete().eq("key", key);
+        if (res.error) { showMsg($("globalMsg"), "Erro ao excluir: " + res.error.message, "error"); return; }
+        await loadContent();
+      });
+    });
+  }
+
+  $("addContentBtn").addEventListener("click", async function(){
+    var key = $("newContentKey").value.trim();
+    var value = $("newContentValue").value;
+    if (!key) return;
+    var res = await sb.from("site_content").upsert({ key: key, value: value });
+    if (res.error) { showMsg($("globalMsg"), "Erro ao adicionar: " + res.error.message, "error"); return; }
+    $("newContentKey").value = "";
+    $("newContentValue").value = "";
+    await loadContent();
+    showMsg($("globalMsg"), "Texto adicionado.", "ok");
+  });
+
+  checkSession();
+})();
+</script>
+</body>
+</html>
