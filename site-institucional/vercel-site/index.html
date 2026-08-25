@@ -1514,10 +1514,18 @@ var FALLBACK_DATA = {
     });
   }
 
-  function safeStep(label, fn){
+  function safeStep(label, fn, targetElId){
     try { fn(); }
     catch (e) {
       if (window.console && console.error) { console.error("Acelera: falha ao renderizar \"" + label + "\"", e); }
+      if (targetElId) {
+        var targetEl = document.getElementById(targetElId);
+        if (targetEl) {
+          var msg = (e && e.message) ? e.message : String(e);
+          targetEl.innerHTML = '<div style="grid-column:1/-1; border:2px dashed #B3261E; border-radius:10px; padding:16px; color:#B3261E; font-size:.85rem; font-family:monospace;">' +
+            'Erro ao carregar "' + label + '": ' + msg.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") + '</div>';
+        }
+      }
     }
   }
 
@@ -1563,12 +1571,12 @@ var FALLBACK_DATA = {
         if (featuredList.length === 0) { featuredList = products; }
         homeGridEl.innerHTML = featuredList.slice(0, 4).map(renderProductCard).join("");
       }
-    });
+    }, "homeProductGrid");
 
     safeStep("productGrid", function(){
       var gridEl = document.getElementById("productGrid");
       if (gridEl){ gridEl.innerHTML = products.map(renderProductCard).join(""); }
-    });
+    }, "productGrid");
 
     safeStep("productDetailPages", function(){
       document.querySelectorAll('.page[data-generated="1"]').forEach(function(el){ el.remove(); });
