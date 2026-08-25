@@ -380,6 +380,78 @@
   .pillar h3{ font-size:1rem; font-weight:700; }
   .pillar p{ margin-top:8px; font-size:.87rem; color:var(--ink-soft); }
 
+  /* ---- about: solutions bento ---- */
+  .bento-photo{
+    position:relative; overflow:hidden; border-radius:20px; min-height:180px;
+    display:flex; align-items:flex-end; padding:18px;
+  }
+  .bento-photo::before{ content:""; position:absolute; inset:0; background:radial-gradient(320px circle at 20% 10%, rgba(255,255,255,.16), transparent 65%); }
+  .bento-photo span{ position:relative; z-index:1; color:#fff; font-weight:700; font-size:.86rem; text-shadow:0 1px 6px rgba(0,0,0,.25); }
+  .bento-photo.tone-a{ background:linear-gradient(160deg, var(--brand-green), var(--brand-green-deep)); }
+  .bento-photo.tone-b{ background:linear-gradient(160deg, var(--brand-gold), #8a6a35); }
+  .bento-photo.tone-c{ background:linear-gradient(150deg, var(--line-solo), #303030); }
+
+  .solutions-bento{
+    display:grid; grid-template-columns:1fr 1.5fr 1fr; grid-template-rows:auto auto; gap:20px;
+    grid-template-areas:"img1 text1 img2" "img1 text2 cta";
+  }
+  @media (max-width:900px){
+    .solutions-bento{ grid-template-columns:1fr; grid-template-areas:"img1" "text1" "img2" "text2" "cta"; }
+  }
+  .solutions-bento .cell-img1{ grid-area:img1; }
+  .solutions-bento .cell-text1{ grid-area:text1; }
+  .solutions-bento .cell-img2{ grid-area:img2; }
+  .solutions-bento .cell-text2{ grid-area:text2; }
+  .solutions-bento .cell-cta{ grid-area:cta; }
+  .bento-text{ background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:28px; display:flex; flex-direction:column; justify-content:center; }
+  .bento-text h3{ font-size:1.3rem; color:var(--brand-green-deep); }
+  .bento-text p{ margin-top:12px; font-size:.92rem; color:var(--ink-soft); }
+  .bento-cta{
+    background:var(--brand-green-deep); color:#fff; border-radius:20px; padding:28px;
+    display:flex; flex-direction:column; justify-content:center; gap:14px;
+  }
+  .bento-cta h3{ font-size:1.15rem; color:#fff; }
+  .bento-cta p{ font-size:.88rem; color:rgba(255,255,255,.8); }
+  .bento-cta .btn{ align-self:flex-start; }
+
+  /* ---- about: quem somos ---- */
+  .quemsomos-head{ display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:end; padding-bottom:28px; border-bottom:1px solid var(--line); margin-bottom:36px; }
+  @media (max-width:800px){ .quemsomos-head{ grid-template-columns:1fr; gap:16px; } }
+  .quemsomos-head h2{ font-size:clamp(1.6rem,3vw,2.2rem); margin-top:12px; color:var(--ink); }
+  .quemsomos-intro{ color:var(--ink-soft); font-size:.98rem; }
+  .quemsomos-body{ display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:start; }
+  @media (max-width:800px){ .quemsomos-body{ grid-template-columns:1fr; gap:28px; } }
+  .quemsomos-text{ color:var(--ink-soft); font-size:1rem; max-width:58ch; }
+  .quemsomos-text p + p{ margin-top:16px; }
+  .quemsomos-text strong{ color:var(--ink); }
+  .quemsomos-photos{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .quemsomos-photos .bento-photo{ min-height:200px; aspect-ratio:3/4; }
+  @media (max-width:520px){ .quemsomos-photos{ grid-template-columns:1fr; } }
+
+  /* ---- about: missao/visao/valores ---- */
+  .mvv-grid{ display:grid; grid-template-columns:1fr 1.25fr; grid-template-rows:1fr 1fr; gap:20px; }
+  @media (max-width:800px){ .mvv-grid{ grid-template-columns:1fr; grid-template-rows:none; } }
+  .mvv-card{ border-radius:20px; padding:30px; }
+  .mvv-card.light{ grid-column:1; background:var(--surface); border:1px solid var(--line); }
+  .mvv-card.light h3{ font-size:1.35rem; margin-top:12px; color:var(--brand-green-deep); }
+  .mvv-card.light p{ margin-top:12px; font-size:.92rem; color:var(--ink-soft); }
+  .mvv-card.dark{ grid-column:2; grid-row:1 / 3; background:var(--brand-green-deep); color:#fff; }
+  .mvv-card.dark .kicker{ color:rgba(255,255,255,.7); }
+  .mvv-card.dark .kicker::before{ background:var(--brand-gold); }
+  .mvv-card.dark h3{ font-size:1.35rem; margin-top:12px; color:#fff; }
+  @media (max-width:800px){ .mvv-card.light{ grid-column:auto; } .mvv-card.dark{ grid-column:auto; grid-row:auto; } }
+
+  .valores-list{ margin-top:22px; border-top:1px solid rgba(255,255,255,.2); }
+  .valor-item{
+    width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:none; border:none; border-bottom:1px solid rgba(255,255,255,.2); color:var(--brand-gold);
+    font-weight:700; font-size:1rem; text-align:left; padding:16px 0; cursor:pointer;
+  }
+  .valor-item .plus{ flex:none; width:26px; height:26px; border:1px solid rgba(255,255,255,.4); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:400; transition:transform .2s ease; }
+  .valor-item[aria-expanded="true"] .plus{ transform:rotate(45deg); }
+  .valor-desc{ max-height:0; overflow:hidden; transition:max-height .25s ease, padding .25s ease; font-size:.88rem; color:rgba(255,255,255,.8); }
+  .valor-desc.open{ max-height:140px; padding-bottom:16px; }
+
   /* ============ PRODUCTS ============ */
   .product-section-head{ max-width:none; }
   .section-head-top{
@@ -705,36 +777,91 @@
   <section class="page" data-page="sobre">
     <section class="block">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="kicker">Quem somos</span>
-          <h2 data-content-key="institutional_section_title">Comprometidos com o produtor rural</h2>
+        <div class="solutions-bento reveal">
+          <div class="bento-photo tone-a cell-img1"><span>Lavoura Acelera</span></div>
+          <div class="bento-text cell-text1">
+            <h3>Soluções para todas as culturas e realidades do campo.</h3>
+            <p>Nossos fertilizantes líquidos atendem as necessidades nutricionais das principais culturas agrícolas, promovendo um desenvolvimento mais equilibrado e produtivo da lavoura, do plantio à colheita.</p>
+          </div>
+          <div class="bento-photo tone-b cell-img2"><span>Do campo para a família</span></div>
+          <div class="bento-text cell-text2">
+            <h3>Uma indústria pensada para o produtor.</h3>
+            <p>Nosso modelo de negócio contribui para que o futuro do agronegócio brasileiro seja mais eficiente, acessível e sustentável — com frete grátis para todo o país e suporte técnico próximo.</p>
+          </div>
+          <div class="bento-cta cell-cta">
+            <h3>Um novo conceito em fertilizantes líquidos.</h3>
+            <p>Nossos produtos oferecem mais eficiência nutricional, são de fácil aplicação e têm a formulação ideal para a sua lavoura.</p>
+            <a class="btn btn-white btn-sm" href="https://wa.me/5517981236203?text=Ol%C3%A1%21%20Gostaria%20de%20falar%20com%20um%20especialista%20da%20Acelera." target="_blank" rel="noopener">Falar com um especialista</a>
+          </div>
         </div>
-        <div class="about-grid">
-          <div class="about-copy">
-            <p>A <strong>Acelera Fertilizantes</strong> é uma indústria brasileira especializada na fabricação e distribuição de fertilizantes e condicionadores de solo, sediada em São José do Rio Preto, no interior de São Paulo, com atendimento para produtores de todo o país.</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="container">
+        <div class="quemsomos-head reveal">
+          <div>
+            <span class="kicker">Quem somos</span>
+            <h2 data-content-key="institutional_section_title">Acelerando resultados, cultivando confiança.</h2>
+          </div>
+          <p class="quemsomos-intro">Desde o início da nossa trajetória, a Acelera Fertilizantes tem o compromisso de oferecer ao produtor rural muito mais do que fertilizantes, entregando soluções que unem ciência, tecnologia e proximidade.</p>
+        </div>
+        <div class="quemsomos-body">
+          <div class="quemsomos-text reveal">
+            <p>A <strong>Acelera Fertilizantes</strong> é uma indústria brasileira especializada na fabricação e distribuição de fertilizantes líquidos e condicionadores de solo, sediada em São José do Rio Preto, no interior de São Paulo, com atendimento para produtores de todo o país.</p>
             <p>Unimos ciência aplicada ao campo e acompanhamento técnico próximo: cada produto das nossas seis linhas é pensado para atuar no metabolismo da planta e no equilíbrio do solo, elevando a produtividade da lavoura em diferentes culturas e sistemas de manejo.</p>
+            <p>Acreditamos que evoluir é essencial para gerar resultados. Por isso, investimos constantemente em novas formulações, na ampliação do nosso portfólio e na qualificação da nossa equipe, garantindo ao produtor acesso a soluções modernas e a um atendimento técnico especializado.</p>
             <p>Da fabricação até a entrega na porteira, o compromisso é sempre o mesmo: <strong>o campo acelera com a gente.</strong></p>
           </div>
-          <div class="pillars reveal">
-            <div class="pillar lead tilt reveal">
-              <span class="num">01</span>
-              <h3>Ciência aplicada</h3>
-              <p>Formulações líquidas de alta absorção, pensadas para o metabolismo da planta e para acelerar cada etapa do desenvolvimento da cultura — do enraizamento à colheita.</p>
-            </div>
-            <div class="pillar tilt reveal">
-              <span class="num">02</span>
-              <h3>Suporte agronômico</h3>
-              <p>Equipe técnica dedicada a orientar a aplicação certa para cada cultura.</p>
-            </div>
-            <div class="pillar tilt reveal">
-              <span class="num">03</span>
-              <h3>Logística nacional</h3>
-              <p>Frete grátis e entrega para produtores em todo o Brasil.</p>
-            </div>
-            <div class="pillar tilt reveal">
-              <span class="num">04</span>
-              <h3>Relacionamento</h3>
-              <p>Atendimento e pós-venda próximos, do pedido até a colheita.</p>
+          <div class="quemsomos-photos reveal">
+            <div class="bento-photo tone-c"><span>Suporte técnico</span></div>
+            <div class="bento-photo tone-a"><span>Equipe Acelera</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="container">
+        <div class="mvv-grid reveal">
+          <div class="mvv-card light">
+            <span class="kicker">Missão</span>
+            <h3>Fazer o campo produzir mais.</h3>
+            <p>Oferecer fertilizantes líquidos e condicionadores de solo que contribuam para o aumento da produtividade, da rentabilidade e da sustentabilidade das lavouras, atuando com ciência, qualidade e proximidade ao produtor rural.</p>
+          </div>
+          <div class="mvv-card light">
+            <span class="kicker">Visão</span>
+            <h3>Ser referência nacional em nutrição líquida.</h3>
+            <p>Ser reconhecida como uma indústria de referência em fertilizantes líquidos, construindo relações de confiança com quem vive o campo todos os dias.</p>
+          </div>
+          <div class="mvv-card dark">
+            <span class="kicker">Valores</span>
+            <h3>Princípios que cultivamos todos os dias.</h3>
+            <div class="valores-list" id="valoresList">
+              <button class="valor-item" type="button" aria-expanded="false" data-valor="0">
+                <span>Compromisso com o produtor</span><span class="plus">+</span>
+              </button>
+              <div class="valor-desc" data-valor-desc="0">Colocamos as necessidades de quem produz no centro de cada decisão, do desenvolvimento de fórmulas ao atendimento pós-venda.</div>
+
+              <button class="valor-item" type="button" aria-expanded="false" data-valor="1">
+                <span>Qualidade e confiança</span><span class="plus">+</span>
+              </button>
+              <div class="valor-desc" data-valor-desc="1">Cada lote é produzido em unidade própria, com controle de qualidade em todas as etapas de fabricação.</div>
+
+              <button class="valor-item" type="button" aria-expanded="false" data-valor="2">
+                <span>Inovação constante</span><span class="plus">+</span>
+              </button>
+              <div class="valor-desc" data-valor-desc="2">Investimos continuamente em novas formulações e tecnologias para acompanhar as exigências do campo moderno.</div>
+
+              <button class="valor-item" type="button" aria-expanded="false" data-valor="3">
+                <span>Ética e transparência</span><span class="plus">+</span>
+              </button>
+              <div class="valor-desc" data-valor-desc="3">Construímos relações duradouras baseadas em transparência, do primeiro contato ao pós-venda.</div>
+
+              <button class="valor-item" type="button" aria-expanded="false" data-valor="4">
+                <span>Sustentabilidade</span><span class="plus">+</span>
+              </button>
+              <div class="valor-desc" data-valor-desc="4">Buscamos soluções que contribuam para uma agricultura mais eficiente e sustentável, sem abrir mão da produtividade.</div>
             </div>
           </div>
         </div>
@@ -1406,7 +1533,7 @@ var FALLBACK_DATA = {
     "hero_cta_secondary_label": "Falar com um especialista",
     "about_title": "Mais do que fertilizantes, oferecemos soluções para você produzir melhor.",
     "catalog_section_title": "Um pouco da nossa linha de produtos",
-    "institutional_section_title": "Comprometidos com o produtor rural",
+    "institutional_section_title": "Acelerando resultados, cultivando confiança.",
     "products_page_title": "Cinco linhas, uma lavoura mais produtiva"
   }
 };
@@ -1735,6 +1862,16 @@ var FALLBACK_DATA = {
       document.documentElement.setAttribute("data-theme", next);
     });
   }
+
+  // ---- about: valores accordion ----
+  document.querySelectorAll(".valor-item").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var open = btn.getAttribute("aria-expanded") === "true";
+      var desc = document.querySelector('[data-valor-desc="' + btn.getAttribute("data-valor") + '"]');
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      if(desc){ desc.classList.toggle("open", !open); }
+    });
+  });
 
   // ---- product line filter ----
   function filterLine(line){
