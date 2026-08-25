@@ -1853,19 +1853,31 @@ var FALLBACK_DATA = {
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ---- scroll reveal ----
-  if(!reduceMotion && "IntersectionObserver" in window){
-    var revealObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add("in");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold:0.12, rootMargin:"0px 0px -40px 0px" });
-    document.querySelectorAll(".reveal").forEach(function(el){ revealObserver.observe(el); });
-  } else {
-    document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); });
+  // Content rendered dynamically (product cards/pages refreshed after the
+  // Supabase fetch resolves, or generated later by an admin edit) creates
+  // brand-new ".reveal" elements that this observer has never seen. Calling
+  // this again after every re-render keeps them from being stuck invisible.
+  var revealObserver = null;
+  function observeReveals(){
+    if(reduceMotion || !("IntersectionObserver" in window)){
+      document.querySelectorAll(".reveal:not(.in)").forEach(function(el){ el.classList.add("in"); });
+      return;
+    }
+    if(!revealObserver){
+      revealObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add("in");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold:0.12, rootMargin:"0px 0px -40px 0px" });
+    }
+    document.querySelectorAll(".reveal:not(.in)").forEach(function(el){ revealObserver.observe(el); });
   }
+  observeReveals();
+  window.__acelera.observeReveals = observeReveals;
+  window.__acelera.afterRender = observeReveals;
 
   // ---- hero panel spotlight cursor ----
   var heroPanel = document.getElementById("heroPanel");
