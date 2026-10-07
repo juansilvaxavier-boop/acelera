@@ -1,0 +1,13 @@
+{
+  "name": "acelera-faturas-proxy-cf",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Proxy Cloudflare Worker que consulta faturas na API do Banco Cora via mTLS, para a página Consulta de Faturas do site institucional da Acelera.",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

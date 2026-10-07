@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Separate project (its own package.json, deployed independently as
+    // plain Node.js/CommonJS Vercel Serverless Functions) — not part of
+    // this Next.js app, so it shouldn't be linted with these rules.
+    "site-institucional/**",
   ]),
 ]);
 
